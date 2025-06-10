@@ -60,14 +60,10 @@ Being a browser-based game, "A Fleet Among Angels" is being built with the follo
 
 This project is a collaborative effort by a passionate team of developers and designers. We are a team of 6, including:
 
-* Myself, Zach Barrentine
-
-* Jack Tsui
-
-* Daniel Prince
-
+* Gage Ahlmark
+* Zach Barrentine
 * Carlos Polanco
-
+* Daniel Prince
+* Jack Tsui
 * Jordan Wilcox
 
-* Gage Ahlmark
