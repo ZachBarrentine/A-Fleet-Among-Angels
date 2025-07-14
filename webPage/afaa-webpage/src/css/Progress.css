@@ -1,0 +1,51 @@
+.pBodyBox{
+    text-align: center;
+    margin: 20px;
+    max-width: 60ch;
+    margin: 0 auto; 
+}
+
+.pBodyText{
+    color: rgb(214, 214, 214);
+    margin:10px;
+    font-size: clamp(1em, 6vw, 1.1em);
+    font-family: 'Kode Mono', monospace;
+    text-align: left;
+    text-indent: 4em;
+}
+
+.progressBox
+{
+    min-height: 10vh;
+    max-height: 15vh;
+    height: auto;
+    padding: 2em 1em;
+    display:flex;
+    align-items: center;  
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 0px;
+    background-image: url('../assets/Stock_Space.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin:0;
+}
+
+.progressTitle
+{
+    font-size: clamp(2em, 8vw, 3.5em);
+    color:rgb(186, 29, 29);
+    font-family: 'Inria Serif', serif;
+    text-align: center;
+}
+
+.nameHighlight{
+    color:rgb(186, 29, 29);
+    font-weight: bold;
+}
+
+.boldText{
+    font-weight: bold;
+    color: #17ce17;
+}
