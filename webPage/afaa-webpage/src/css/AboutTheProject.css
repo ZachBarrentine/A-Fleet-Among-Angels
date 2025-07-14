@@ -1,0 +1,74 @@
+.TitleBox2 {
+    min-height: 10vh;
+    max-height: 15vh;
+    height: auto;
+    padding: 2em 1em; 
+    display:flex;
+    align-items: center;  
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 0px;
+    background-image: url('../assets/Stock_Space.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.projectTitle {
+    font-size: clamp(2em, 8vw, 3.5em);
+    color:rgb(186, 29, 29);
+    font-family: 'Inria Serif', serif;
+    text-align: center;
+}
+
+.projectHeadline {
+    color: #FFD445;
+    font-family: 'Kode Mono', monospace;
+    font-size: 2.5em;
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.AboutTheProjectBody {
+    color: rgb(214, 214, 214);
+    font-family: 'Kode Mono', monospace;
+    font-size: clamp(.5em, 6vw, 1em);
+    text-align: left;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    line-height: 30px;
+    max-width: 60ch;
+    margin: 0 auto;
+}
+
+.AboutTheProjectBody.indented {
+    text-indent: 4em;
+}
+
+.highlightRed {
+    color:rgb(186, 29, 29);
+    font-weight: bold;
+}
+
+.highlightBlue {
+    color: #1ebdea;
+    font-weight: bold;
+}
+
+.highlightGreen {
+    color: #17ce17;
+    font-weight: bold;
+}
+
+.listSpacing {
+    list-style-type: disc;
+    padding-left: 2em;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.listSpacing li {
+    margin-bottom: 0.5em; /* Adjust this for tighter/looser spacing */
+    line-height: 1.4em; /* Optional: tweak for paragraph readability */
+}

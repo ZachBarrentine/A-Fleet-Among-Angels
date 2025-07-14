@@ -1,0 +1,97 @@
+.TitleBox
+{              
+    min-height: 10vh;
+    max-height: 15vh;
+    height: auto;
+    padding: 2em 1em;
+    display:flex;
+    align-items: center;  
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 0px;
+    background-image: url('../assets/Stock_Space.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin:0;
+}
+
+.homeTitle
+{
+    font-size: clamp(2em, 8vw, 3.5em);
+    background-image: linear-gradient(#C50D0D, #730000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Inria Serif', serif;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
+
+.homeSubtitle
+{
+    font-size: clamp(1.1em, 1.3vw, 2em);
+    background-image: linear-gradient(#FFD445, #AF8600);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Inria Serif', serif;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.homeContainer{
+  padding-bottom: 40px;
+  margin: 10px;
+}
+
+.subtitle{
+    font-size: clamp(1em, 6vw, 1.5em);
+    color:#FFD445;
+    margin: 0px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    font-family: 'Kode Mono', monospace;
+    text-align: center;
+}
+
+.bodyContent{
+    color: rgb(214, 214, 214);
+    margin:10px;
+    font-size: clamp(.5em, 6vw, 1em);
+    font-family: 'Kode Mono', monospace;
+    text-align: center;
+    max-width: 60ch;
+    margin: 0 auto; 
+}
+
+.playButton{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 40px;
+    height:120px;
+    width:250px;
+    background-color: rgb(19, 19, 55);
+    color: rgb(217, 1, 1);
+    font-size: 1.7em;
+    font-family: 'Kode Mono', monospace;
+    font-weight:bold;
+    text-decoration: none;
+    border-radius:15px;
+    border: 2px solid rgb(0, 0, 0);
+    cursor:pointer;
+}
+
+.playButton:hover{
+    background-color: rgb(78, 78, 107);
+    color: rgb(175, 175, 175);
+}
+
+.playButton:active{
+    transform: scale(0.95);
+}
