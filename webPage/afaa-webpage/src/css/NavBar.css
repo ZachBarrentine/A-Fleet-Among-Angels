@@ -10,13 +10,24 @@
     color: rgb(175, 175, 175);
 }
 
-.navLink, .navDemo{
+.navLink{
     font-family: 'Kode Mono', monospace;
     font-size: 1.2em;
     color:rgb(0, 98, 255);
     padding: 8px;
     border-radius: 2px;
     text-decoration: none;
+    border-right: 1px solid rgb(54, 54, 54);
+}
+
+.navLink2, .navDemo{
+    font-family: 'Kode Mono', monospace;
+    font-size: 1.2em;
+    color:rgb(0, 98, 255);
+    padding: 8px;
+    border-radius: 2px;
+    text-decoration: none;
+    border-left: 1px solid rgb(54, 54, 54);
     border-right: 1px solid rgb(54, 54, 54);
 }
 
@@ -33,5 +44,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.navLogo{
+    background-image: url('../assets/stock_logo.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100px;
+    height: 50px;
+    margin-right: 186px; /* Not sure how to center-orient from the entire page rather than the navbar */
 }
 

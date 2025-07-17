@@ -2,7 +2,7 @@
     min-height: 10vh;
     max-height: 15vh;
     height: auto;
-    padding: 2em 1em; 
+    padding: 1em 1em; 
     display:flex;
     align-items: center;  
     justify-content: center;
@@ -16,9 +16,15 @@
 
 .projectTitle {
     font-size: clamp(2em, 8vw, 3.5em);
-    color:rgb(186, 29, 29);
+    background-image: linear-gradient(#C50D0D, #730000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-family: 'Inria Serif', serif;
     text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .projectHeadline {
@@ -47,17 +53,21 @@
 }
 
 .highlightRed {
-    color:rgb(186, 29, 29);
-    font-weight: bold;
+    background-image: linear-gradient(#C50D0D, #730000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Inria Serif', serif;
 }
 
-.highlightBlue {
-    color: #1ebdea;
+.makeBold {
     font-weight: bold;
+    font-style: italic;
+    color: rgb(177, 212, 212);
 }
 
 .highlightGreen {
-    color: #17ce17;
+    color: #53b453;
     font-weight: bold;
 }
 
