@@ -12,7 +12,7 @@ function NavBar(){
         <div className="navLogo">
         </div>
         <div className="navbarLinks">
-            <Link to ="/Progress" className="navDemo">Demo</Link>
+            <Link to ="/Demo" className="navDemo">Demo</Link>
         </div>
     </nav>
     );
