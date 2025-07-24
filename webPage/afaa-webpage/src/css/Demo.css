@@ -1,4 +1,4 @@
-.TitleBox2 {
+.TitleBox3 {
     min-height: 10vh;
     max-height: 15vh;
     height: auto;
@@ -36,7 +36,7 @@
     margin-bottom: 25px;
 }
 
-.AboutTheProjectBody {
+.DemoBody {
     color: rgb(214, 214, 214);
     font-family: 'Kode Mono', monospace;
     font-size: clamp(.5em, 6vw, 1em);
@@ -48,37 +48,34 @@
     margin: 0 auto;
 }
 
-.AboutTheProjectBody.indented {
+.DemoBody.indented {
     text-indent: 4em;
 }
 
-.highlightRed {
-    background-image: linear-gradient(#C50D0D, #780000);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: 'Inria Serif', serif;
+.demoScreen {
+    width: 85vw;
+    height: 85vh;
+    display: flex;
+    background-color: #000;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
 }
 
-.makeBold {
+.playButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    background-color: rgb(29, 29, 119);
+    color: rgb(214, 214, 214);
+    font-size: 1.7em;
+    font-family: 'Kode Mono', monospace;
     font-weight: bold;
-    font-style: italic;
-    color: rgb(177, 212, 212);
-}
-
-.highlightBlue {
-    color: #91cafe;
-    font-weight: bold;
-}
-
-.listSpacing {
-    list-style-type: disc;
-    padding-left: 2em;
-    margin-top: 0;
-    margin-bottom: 20px;
-}
-
-.listSpacing li {
-    margin-bottom: 0.5em;
-    line-height: 1.4em;
+    text-decoration: none;
+    border-radius: 15px;
+    border: 2px solid rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 5px;
 }

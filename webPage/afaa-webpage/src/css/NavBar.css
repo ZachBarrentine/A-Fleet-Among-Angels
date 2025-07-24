@@ -30,11 +30,6 @@
     border-left: 1px solid rgb(54, 54, 54);
     border-right: 1px solid rgb(54, 54, 54);
 }
-
-.navDemo{
-    border-left: 1px solid rgb(54, 54, 54);
-}
-
 .navDemo:hover{
     background-color: rgb(72, 72, 165); 
     color: rgb(175, 175, 175);
@@ -53,6 +48,6 @@
     background-size: cover;
     width: 100px;
     height: 50px;
-    margin-right: 186px; /* Not sure how to center-orient from the entire page rather than the navbar */
+    margin-right: 150px; /* Not sure how to center-orient from the entire page rather than the navbar */
 }
 

@@ -1,14 +1,7 @@
 body {
   margin:0;
   height: 1000px;
-  /*background-color: rgb(72, 72, 165); 
-  
-  background-image: url('../assets/Stock_Space.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height:100vh;*/
-  background-image: linear-gradient(rgb(47, 47, 152), rgb(103, 103, 188));
+  background-image: linear-gradient(rgb(47, 47, 152), rgb(138, 138, 218));
 }
 
 

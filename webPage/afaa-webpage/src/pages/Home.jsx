@@ -16,7 +16,7 @@ function Home(){
             <p className="bodyContent">Welcome to the official website for A Fleet Among Angels: a browser-based Tactical Strategy Role-Playing Game currently in active development! <br/><br/>
                                 Here you can find our active development progress, learn more about our project, and try out our playable demo.
             </p>
-        <Link to ="/Progress" className="playButton">PLAY DEMO</Link>
+        <Link to ="/Demo" className="playButton">PLAY DEMO</Link>
         </div>
     </>    
     );
