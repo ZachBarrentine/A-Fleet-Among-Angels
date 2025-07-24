@@ -6,14 +6,14 @@
 }
 
 .navLink:hover{
-    background-color: rgb(72, 72, 165); 
+    background-color: #4848a5; 
     color: rgb(175, 175, 175);
 }
 
 .navLink{
     font-family: 'Kode Mono', monospace;
     font-size: 1.2em;
-    color:rgb(0, 98, 255);
+    color:rgb(103, 103, 188);
     padding: 8px;
     border-radius: 2px;
     text-decoration: none;
@@ -23,7 +23,7 @@
 .navLink2, .navDemo{
     font-family: 'Kode Mono', monospace;
     font-size: 1.2em;
-    color:rgb(0, 98, 255);
+    color:rgb(103, 103, 188);
     padding: 8px;
     border-radius: 2px;
     text-decoration: none;

@@ -19,7 +19,7 @@
 .homeTitle
 {
     font-size: clamp(2em, 8vw, 3.5em);
-    background-image: linear-gradient(#C50D0D, #730000);
+    background-image: linear-gradient(#C50D0D, #780000);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -33,7 +33,7 @@
 .homeSubtitle
 {
     font-size: clamp(1.1em, 1.3vw, 2em);
-    background-image: linear-gradient(#FFD445, #AF8600);
+    background-image: linear-gradient(#FFD445, #BA9108);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -76,8 +76,8 @@
     margin-top: 40px;
     height:120px;
     width:250px;
-    background-color: rgb(19, 19, 55);
-    color: rgb(217, 1, 1);
+    background-color: rgb(29, 29, 119);
+    color: rgb(214, 214, 214);
     font-size: 1.7em;
     font-family: 'Kode Mono', monospace;
     font-weight:bold;
@@ -89,7 +89,7 @@
 
 .playButton:hover{
     background-color: rgb(78, 78, 107);
-    color: rgb(175, 175, 175);
+    color: rgb(149, 149, 215);
 }
 
 .playButton:active{
