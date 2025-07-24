@@ -8,10 +8,10 @@ function AboutTheProject(){
         </div><div>
                 <h1 className ="projectHeadline">About Us</h1>
                 <ul className="AboutTheProjectBody" listSpacing>
-                <li>We are a development team composed of <span className="highlightGreen">six undergraduate members</span>.</li>
+                <li>We are a development team composed of <span className="highlightBlue">six undergraduate members</span>.</li>
                 <li>The purpose of this project is to grow our proficiency in our own respective roles through a digital product that anyone can experience.</li>
                 <li>Our goal is to create a unique and engaging gaming experience that combines tactical strategy with an immersive narrative.</li>
-                <li>Of the six members, four are pursuing <span className="highlightGreen">computer science</span>, one is pursuing <span className="highlightGreen">graphic design</span>, and one is pursuing <span className="highlightGreen">marketing</span>.</li>
+                <li>Of the six members, four are pursuing <span className="highlightBlue">computer science</span>, one is pursuing <span className="highlightGreen">graphic design</span>, and one is pursuing <span className="highlightGreen">marketing</span>.</li>
                 </ul>
                 <h1 className="projectHeadline">About the Game</h1>
                 <p className="AboutTheProjectBody indented">

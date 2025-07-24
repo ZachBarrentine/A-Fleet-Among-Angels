@@ -16,7 +16,7 @@
 
 .projectTitle {
     font-size: clamp(2em, 8vw, 3.5em);
-    background-image: linear-gradient(#C50D0D, #730000);
+    background-image: linear-gradient(#C50D0D, #780000);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -53,7 +53,7 @@
 }
 
 .highlightRed {
-    background-image: linear-gradient(#C50D0D, #730000);
+    background-image: linear-gradient(#C50D0D, #780000);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -66,8 +66,8 @@
     color: rgb(177, 212, 212);
 }
 
-.highlightGreen {
-    color: #53b453;
+.highlightBlue {
+    color: #91cafe;
     font-weight: bold;
 }
 

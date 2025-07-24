@@ -1,18 +1,17 @@
 .pBodyBox{
-    text-align: center;
-    margin: 20px;
-    max-width: 60ch;
-    margin: 0 auto; 
+    text-align: left;
 }
 
 .pBodyText{
     color: rgb(214, 214, 214);
-    margin:10px;
-    font-size: clamp(.5em, 6vw, 1em);
     font-family: 'Kode Mono', monospace;
+    font-size: clamp(.5em, 6vw, 1em);
+    margin: 10px auto;
     text-align: left;
     text-indent: 4em;
     margin-top: 25px;
+    margin-bottom: 20px;
+    max-width: 60ch;
 }
 
 .progressBox
@@ -36,7 +35,7 @@
 .progressTitle
 {
     font-size: clamp(2em, 8vw, 3.5em);
-    background-image: linear-gradient(#C50D0D, #730000);
+    background-image: linear-gradient(#C50D0D, #780000);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -48,7 +47,7 @@
 }
 
 .nameHighlight{
-    background-image: linear-gradient(#C50D0D, #730000);
+    background-image: linear-gradient(#C50D0D, #780000);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -57,5 +56,5 @@
 
 .boldText{
     font-weight: bold;
-    color: #17ce17;
+    color: rgb(27, 27, 59);
 }
