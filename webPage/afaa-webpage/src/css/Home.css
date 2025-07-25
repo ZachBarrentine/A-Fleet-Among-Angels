@@ -6,11 +6,11 @@
     align-items: center;  
     justify-content: center;
     flex-direction: column;
-    background-image: url('../assets/Stock_Space.jpg');
+    background-image: url('../assets/Space1.jpg');
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center 25%;
     background-size: cover;
-    margin:0;
+    margin: 0;
 }
 
 .homeTitle
