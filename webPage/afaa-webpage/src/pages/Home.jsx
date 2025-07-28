@@ -3,9 +3,9 @@ import {Link} from "react-router-dom";
 
 function Home(){
     return ( 
-    <>
-        
+    <> 
         <div className="TitleBox">
+            <img src="src/assets/Space1.jpg" className="bannerImg"></img>
             <h1 className="homeTitle">A Fleet Among Angels</h1>
             <p className="homeSubtitle">Rebirth of a Galactic Peril</p>
         </div>
