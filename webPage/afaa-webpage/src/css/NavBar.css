@@ -10,6 +10,11 @@
     color: rgb(175, 175, 175);
 }
 
+.navLink2:hover{
+    background-color: #4848a5; 
+    color: rgb(175, 175, 175);
+}
+
 .navLink{
     font-family: 'Kode Mono', monospace;
     font-size: 1.2em;
