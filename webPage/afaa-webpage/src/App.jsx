@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {Routes, Route} from 'react-router-dom'
 import './css/App.css'
 import NavBar from './components/NavBar'
@@ -6,6 +5,7 @@ import AboutTheProject from './pages/AboutTheProject'
 import Progress from './pages/Progress'
 import Home from './pages/Home'
 import Demo from './pages/Demo'
+import '../firebase.js'
 
 function App() {
   //const [count, setCount] = useState(0)
