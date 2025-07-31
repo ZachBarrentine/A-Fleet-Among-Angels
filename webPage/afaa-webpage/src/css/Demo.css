@@ -62,7 +62,7 @@
     align-items: center;
 }
 
-.playButton {
+.playDemoButton {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,10 +72,31 @@
     font-size: 1.7em;
     font-family: 'Kode Mono', monospace;
     font-weight: bold;
+    border-radius: 15px;
+    border: 2px solid rgb(0, 0, 0);
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.signInButton, .signOutButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    background-color: rgb(29, 29, 119);
+    color: rgb(214, 214, 214);
+    font-size: 1em;
+    font-family: 'Kode Mono', monospace;
+    font-weight: bold;
     text-decoration: none;
     border-radius: 15px;
     border: 2px solid rgb(0, 0, 0);
     cursor: pointer;
-    transition: background-color 0.3s ease;
     margin-top: 5px;
+}
+
+
+.signInButton:hover, .signOutButton:hover, .playDemoButton:hover{
+    background-color: rgb(78, 78, 107);
+    color: rgb(149, 149, 215);
 }
