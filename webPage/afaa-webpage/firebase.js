@@ -3,8 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
+// Delete contents for every push
 const firebaseConfig = {
-  //our config, its found on firebase
 };
 
 const app = initializeApp(firebaseConfig);

@@ -17,6 +17,9 @@
 
     background-size: cover;
     margin: 0;
+    border: rgb(29, 29, 119);
+    border-width: 1px;
+    border-style: solid;
 }
 
 /*

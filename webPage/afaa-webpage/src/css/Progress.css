@@ -30,6 +30,10 @@
     background-position: center;
     background-size: cover;
     margin:0;
+
+    border: rgb(29, 29, 119);
+    border-width: 1px;
+    border-style: solid;
 }
 
 .progressTitle
@@ -56,5 +60,5 @@
 
 .boldText{
     font-weight: bold;
-    color: rgb(27, 27, 59);
+    color: #91cafe;
 }
