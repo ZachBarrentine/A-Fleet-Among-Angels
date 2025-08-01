@@ -12,6 +12,10 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+
+    border: rgb(29, 29, 119);
+    border-width: 1px;
+    border-style: solid;
 }
 
 .projectTitle {
