@@ -492,7 +492,7 @@ class FireEmblemGame:
                 if event.button == 1:
                     mouse_pos = pygame.mouse.get_pos()
 
-                    grid_pos = self.grid.world_to_grid(mouse_pos)
+                    grid_pos = self.grid.world_to_grid(mouse_pos, tuple(self.camera_offset))
 
                     self.grid.handle_click(grid_pos=grid_pos)
 
