@@ -37,6 +37,8 @@ class Grid:
 
         self.hovered_option = None
         self.menu_rects = {}
+        
+        self.valid_attack_targets = set()
 
 
         # Cost for moving through specfic tiles
@@ -379,9 +381,20 @@ class Grid:
             self.deselect_unit(undo=False)
 
         elif action == "Attack":
+            
+            
+            self.state = GridState.TARGETING
 
-            # self.state = GridState.TARGETING
-            print(f"Attacking unit")
+            can_attack, enemies = self.can_attack_from_position(self.selected_unit.grid_pos)
+
+            if can_attack:
+                self.valid_attack_targets = enemies
+                print(f"{self.selected_unit.name} is ready to attack! Click on an enemy to target.")
+
+            else:
+                print(f"No enemies to attack")
+
+
 
         elif action == "item":
 
@@ -393,6 +406,12 @@ class Grid:
 
         target.take_dmg(damage)
         
+        if target.hp <= 0:
+            print(f"{target.name} has been defeated")
+            return True
+        
+
+        return False
 
 
     def handle_click(self, grid_pos: Tuple[int, int], mouse_pos: Tuple[int,int] = None) -> bool:
@@ -418,7 +437,81 @@ class Grid:
                 return self.select_unit(grid_pos=grid_pos)
             
             return self.move_unit(grid_pos)
+
+        elif self.state == GridState.TARGETING:
+            target_unit = self.get_unit_at_pos(grid_pos=grid_pos)
+
+            if target_unit and target_unit.team != self.selected_unit.team:
+
+                can_attack, enemies = self.can_attack_from_position(self.selected_unit.grid_pos)
+
+                
+
+                if can_attack and target_unit in enemies:
+
+                    is_defeated = self.perform_attack(self.selected_unit, target_unit)
+
+                    self.selected_unit.has_moved = True
+
+                    self.show_grid = False
+
+                    self.valid_attack_targets = set() 
+
+                    self.deselect_unit(undo=False)
+
+                    return True
+                
+                else:
+                    print(f"Enemy out of range")
+                
+            else:
+                print(f"Invalid target")
+
+
+            return False
+
+
+
+
+    def render_attack_overlay(self, surface: pygame.Surface, camera_offset: Tuple[int,int] = (0,0)):
+
+        if self.state != GridState.TARGETING:
+            return
         
+        overlay_surface = pygame.Surface(surface.get_size(), pygame.SRCALPHA)
+
+        # Highlight enemies in range
+        if hasattr(self, 'valid_attack_targets'):
+            for target_unit in self.valid_attack_targets:
+                world_pos = self.grid_to_world(target_unit.grid_pos)
+
+                screen_x = world_pos[0] - camera_offset[0]
+                screen_y = world_pos[1] - camera_offset[1]
+
+                # rect of the enemy unit that will be used for highlighting effect
+                rect = pygame.Rect(screen_x, screen_y, self.tile_size, self.tile_size)
+
+                pygame.draw.rect(overlay_surface, (255, 0, 0, 100), rect)
+                pygame.draw.rect(overlay_surface, (255, 0, 0), rect, 3)
+
+
+        if self.selected_unit:
+            world_pos = self.grid_to_world(self.selected_unit.grid_pos)
+
+
+            screen_x = world_pos[0] - camera_offset[0]
+            screen_y = world_pos[1] - camera_offset[1]
+
+            rect = pygame.Rect(screen_x, screen_y, self.tile_size, self.tile_size)
+
+            pygame.draw.rect(overlay_surface, self.select_color, rect)
+
+            pygame.draw.rect(overlay_surface, (255, 255, 0), rect, 3)
+
+
+        surface.blit(overlay_surface, (0,0))
+
+
 
 
 
