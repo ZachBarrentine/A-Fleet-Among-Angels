@@ -14,7 +14,8 @@ class Unit:
         self.hp = hp
         self.max_hp = hp
         self.attack = attack
-        
+        self.level = 1
+
     def get_pixel_pos(self, tile_size:int) -> Tuple[int, int]:
 
 
@@ -24,4 +25,7 @@ class Unit:
 
     def can_move(self):
         return not self.has_moved
+    
+    def take_dmg(self, incoming_dmg):
+        self.hp -= incoming_dmg
     
