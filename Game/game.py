@@ -2,6 +2,7 @@ import pygame
 from Game.unit import Unit
 from Game.grid import Grid
 
+from Game.constants import GridState
 
 
 class FireEmblemGame:
@@ -53,14 +54,45 @@ class FireEmblemGame:
 
                     grid_pos = self.grid.world_to_grid(mouse_pos, tuple(self.camera_offset))
 
-                    self.grid.handle_click(grid_pos=grid_pos)
+                    self.grid.handle_click(grid_pos=grid_pos, mouse_pos=mouse_pos)
+
+            elif event.type == pygame.MOUSEMOTION:
+
+                mouse_pos = pygame.mouse.get_pos()
+                self.grid.update_hover(mouse_pos=mouse_pos)
+                
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.grid.start_new_turn()
 
+
                 elif event.key == pygame.K_ESCAPE:
-                    self.grid.deselect_unit()
+                    if self.grid.state == GridState.DECISION:
+                        self.grid.state = GridState.UNIT_SELECT
+
+                         
+                    elif self.grid.state == GridState.UNIT_SELECT:
+
+                        self.grid.state = GridState.IDLE
+
+                        if self.grid.history:
+                            original_pos = self.grid.history.pop()
+                            current_pos = self.grid.selected_unit.grid_pos
+                            
+                            self.grid.selected_unit.grid_pos = original_pos
+
+                            del self.grid.unit_positions[current_pos]
+
+                            self.grid.unit_positions[original_pos] = self.grid.selected_unit
+
+                            print(f"Undid move")
+                        
+                        self.grid.deselect_unit(undo=True)
+
+                    # else:
+                    #     self.grid.deselect_unit()
+                        
 
         
         keys = pygame.key.get_pressed()

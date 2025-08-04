@@ -35,6 +35,9 @@ class Grid:
         self.history = []
         self.decision_menu = {}
 
+        self.hovered_option = None
+        self.menu_rects = {}
+
 
         # Cost for moving through specfic tiles
         self.terrain_cost = {
@@ -217,13 +220,14 @@ class Grid:
 
         return True
     
-    def deselect_unit(self):
+    def deselect_unit(self, undo: bool):
 
         self.selected_unit = None
         self.state = GridState.IDLE
         self.show_grid = False
-        self.valid_moves.clear()
-        self.movement_path.clear()
+        if not undo:
+            self.valid_moves.clear()
+            self.movement_path.clear()
 
     
     def move_unit(self, destination: Tuple[int, int]) -> bool:
@@ -241,7 +245,6 @@ class Grid:
         self.history.append(original_pos)
 
 
-        self.make_decision(destination)
 
 
 
@@ -253,60 +256,168 @@ class Grid:
 
         print(f"Moved {self.selected_unit.name} from {original_pos} to {destination}")
 
-        self.deselect_unit()
 
+        self.state = GridState.DECISION
+        self.setup_decision_menu()
         return True
     
+    def setup_decision_menu(self):
+        if not self.selected_unit:
+            return
 
-    def make_decision(self, destination: Tuple[int, int]) -> bool:
-        
-        self.render_decision_ui(destination)
-
-    
-    def render_decision_ui(self, surface, camera_offset, destination: Tuple[int,int]):
-        
-        attack_available = self.can_attack_from_position(self.selected_unit.grid_pos)
+        avaiable_attack, _ = self.can_attack_from_position(self.selected_unit.grid_pos)
 
         self.decision_menu = {
-            "Attack": attack_available,
-            "wait": True,
-            "item": True
-        }
-
+        "Attack": avaiable_attack,
+        "wait": True,
+        "item": True
+    }
+    
+    def render_decision_ui(self, surface, camera_offset: Tuple[int,int]):
+        
+        # If you are not in the decision state or have not selected a unit on the
+        # screen you shouldn't render the decision ui.
         if self.state != GridState.DECISION or not self.selected_unit:
             return
-        
-        unit_world_pos = self.grid_to_world(self.selected_unit.grid_pos)
-        unit_screen_x  = unit_world_pos[0] - camera_offset[0]
-        unit_screen_y = unit_world_pos[1] - camera_offset[1] - 60  # Offset above unit
 
+        unit_world_pos = self.grid_to_world(self.selected_unit.grid_pos)
+
+        unit_screen_x = unit_world_pos[0] - camera_offset[0] + self.tile_size //2
+        unit_screen_y = unit_world_pos[1] - camera_offset[1]
 
         menu_width = 100
-        menu_height = len(self.decision_menu_options) * 30 + 10
+        menu_height = len(self.decision_menu) * 30 + 10
         option_height = 25
 
-        # Center menu horizontally on unit, position above unit
         menu_x = unit_screen_x - menu_width // 2
-        menu_y = unit_screen_y - menu_height - 10
+        menu_y = unit_screen_y - menu_height -10
 
+        # Ensures the menu stays on the screen
         screen_width, screen_height = surface.get_size()
 
         menu_x = max(0, min(menu_x, screen_width - menu_width))
         menu_y = max(0, min(menu_y, screen_height - menu_height))
 
-        menu_surface = pygame.Surface((menu_x, menu_y), pygame.SRCALPHA)
+        menu_surface = pygame.Surface((menu_width, menu_height), pygame.SRCALPHA)
 
         pygame.draw.rect(menu_surface, (40, 40, 40, 200), (0, 0, menu_width, menu_height))
         pygame.draw.rect(menu_surface, (255, 255, 255), (0, 0, menu_width, menu_height), 2)
-
 
         font = pygame.font.Font(None, 24)
 
         y_offset = 5
 
+        self.menu_rects.clear()
+
+        for option_name, enabled in self.decision_menu.items():
+
+            option_rect = pygame.Rect(menu_x + 5, menu_y + y_offset, menu_width - 10, option_height)
+            self.menu_rects[option_name] = option_rect
+
+
+            if enabled:
+                text_color = (255, 255, 255 )
+                if option_name == self.hovered_option:
+
+                    pygame.draw.rect(menu_surface, (100, 100, 150),
+                                     (5, y_offset, menu_width - 10, option_height))
+            else:
+                text_color = (128, 128, 128)
+
+            
+
+
+            text = font.render(option_name, True, text_color)
+            text_rect = text.get_rect(center=(menu_width//2, y_offset + option_height // 2))
+
+            menu_surface.blit(text, text_rect)
+
+            y_offset += 30
+
+        surface.blit(menu_surface, (menu_x, menu_y))
 
 
 
+
+
+        
+
+    
+    def handle_decision_click(self, mouse_pos: Tuple[int, int]) -> bool:
+
+        for option_name, enabled in self.decision_menu.items():
+            if option_name in self.menu_rects and self.menu_rects[option_name].collidepoint(mouse_pos):
+
+                if enabled:
+                    self.execute_decision(option_name)
+                    return True
+        
+        return False
+    
+    
+    def update_hover(self, mouse_pos: Tuple[int,int]):
+
+        if self.state != GridState.DECISION:
+            self.hovered_option = None
+            return
+        
+        self.hovered_option = None
+
+        for option_name, enabled in self.decision_menu.items():
+            if option_name in self.menu_rects and self.menu_rects[option_name].collidepoint(mouse_pos):
+                if enabled:
+                    self.hovered_option = option_name
+                    break
+
+
+
+    def execute_decision(self, action: str):
+
+        if action == "wait":
+
+            self.selected_unit.has_moved = True
+            self.deselect_unit(undo=False)
+
+        elif action == "Attack":
+
+            # self.state = GridState.TARGETING
+            print(f"Attacking unit")
+
+        elif action == "item":
+
+            # Implement items later
+            self.execute_decision("wait")
+
+    def perform_attack(self, attacker: Unit, target: Unit):
+        damage  = attacker.attack + (attacker.level * 2)
+
+        target.take_dmg(damage)
+        
+
+
+    def handle_click(self, grid_pos: Tuple[int, int], mouse_pos: Tuple[int,int] = None) -> bool:
+
+        if self.state == GridState.DECISION:
+            if mouse_pos:
+                return self.handle_decision_click(mouse_pos)
+        
+            return False
+        
+        if self.state == GridState.IDLE:
+            return self.select_unit(grid_pos=grid_pos)
+
+        elif self.state == GridState.UNIT_SELECT:
+            if grid_pos == self.selected_unit.grid_pos:
+
+                self.deselect_unit()
+                return True
+            
+            other_unit = self.get_unit_at_pos(grid_pos=grid_pos)
+
+            if other_unit:
+                return self.select_unit(grid_pos=grid_pos)
+            
+            return self.move_unit(grid_pos)
         
 
 
@@ -334,7 +445,7 @@ class Grid:
         if len(enemies_to_attack) != 0:
             return True, enemies_to_attack
         else:
-            return False
+            return False, None
         
 
 
@@ -344,27 +455,6 @@ class Grid:
         print("New turn has started")
 
     
-    def handle_click(self, grid_pos: Tuple[int, int]) -> bool:
-
-        if self.state == GridState.IDLE:
-            return self.select_unit(grid_pos=grid_pos)
-
-        # If you are clicking on a unit that has already been selected then
-        # deselect it.
-        elif self.state == GridState.UNIT_SELECT:
-            if grid_pos == self.selected_unit.grid_pos:
-                self.deselect_unit()
-                return True
-
-            # If you are newly selecting a unit 
-            other_unit = self.get_unit_at_pos(grid_pos=grid_pos)
-
-            if other_unit:
-                return self.select_unit(grid_pos=grid_pos)
-                
-            return self.move_unit(grid_pos)
-
-        return False
     
     def world_to_grid(self, world_pos: Tuple[int, int], camera_offset: Tuple[int, int] = (0,0)) -> Tuple[int,int]:
 
@@ -492,3 +582,4 @@ class Grid:
         self.render_grid_lines(surface, camera_offset=camera_offset)
         self.render_movement_overlay(surface=surface, camera_offset=camera_offset)
         self.render_units(surface=surface, camera_offset=camera_offset)
+        self.render_decision_ui(surface=surface, camera_offset=camera_offset)
