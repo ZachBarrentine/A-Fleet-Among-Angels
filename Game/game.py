@@ -30,11 +30,11 @@ class FireEmblemGame:
 
     def setup_test_units(self):
 
-        player1 = Unit("Hero", (5, 5), movement_range=3, team="player")
-        player2 = Unit("Mage", (6,5), movement_range=2, team="player")
+        player1 = Unit("Hero", (5, 5), movement_range=3, team="player", attack_range=1)
+        player2 = Unit("Mage", (6,5), movement_range=2, team="player", attack_range=2)
 
-        enemy1 = Unit("Orc", (10,8), movement_range=2, team="enemy")
-        enemy2 = Unit("Goblin", (12, 9), movement_range=4, team="enemy")
+        enemy1 = Unit("Orc", (10,8), movement_range=2, team="enemy", attack_range=1)
+        enemy2 = Unit("Goblin", (12, 9), movement_range=4, team="enemy", attack_range=1)
 
         self.grid.add_unit(player1)
         self.grid.add_unit(player2)
@@ -68,10 +68,17 @@ class FireEmblemGame:
 
 
                 elif event.key == pygame.K_ESCAPE:
-                    if self.grid.state == GridState.DECISION:
+
+
+                    if self.grid.state == GridState.TARGETING:
+                        self.grid.state = GridState.DECISION
+                        self.grid.valid_attack_targets = set()
+
+
+                    elif self.grid.state == GridState.DECISION:
                         self.grid.state = GridState.UNIT_SELECT
 
-                         
+                   
                     elif self.grid.state == GridState.UNIT_SELECT:
 
                         self.grid.state = GridState.IDLE

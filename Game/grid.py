@@ -71,7 +71,7 @@ class Grid:
         if unit in self.units:
             self.units.remove(unit)
 
-            if self.unit.grid_pos in self.unit_positions:
+            if unit.grid_pos in self.unit_positions:
                 del self.unit_positions[unit.grid_pos]
 
     def get_unit_at_pos(self, grid_pos: Tuple[int, int]):
@@ -222,14 +222,17 @@ class Grid:
 
         return True
     
-    def deselect_unit(self, undo: bool):
+    def deselect_unit(self, undo=False):
+
+        if undo:
+            self.valid_moves.clear()
+            self.movement_path.clear()
+            self.selected_unit.has_moved = False
 
         self.selected_unit = None
         self.state = GridState.IDLE
         self.show_grid = False
-        if not undo:
-            self.valid_moves.clear()
-            self.movement_path.clear()
+       
 
     
     def move_unit(self, destination: Tuple[int, int]) -> bool:
@@ -265,9 +268,12 @@ class Grid:
     
     def setup_decision_menu(self):
         if not self.selected_unit:
-            return
-
-        avaiable_attack, _ = self.can_attack_from_position(self.selected_unit.grid_pos)
+            return  
+        
+        # Have to pass in the unit's attack range even if not using it here because 
+        # the set that stores all of the possible attack positions will be filled with incorrect
+        # attack range.
+        avaiable_attack, _ = self.can_attack_from_position(self.selected_unit.grid_pos, self.selected_unit.attack_range)
 
         self.decision_menu = {
         "Attack": avaiable_attack,
@@ -385,7 +391,7 @@ class Grid:
             
             self.state = GridState.TARGETING
 
-            can_attack, enemies = self.can_attack_from_position(self.selected_unit.grid_pos)
+            can_attack, enemies = self.can_attack_from_position(self.selected_unit.grid_pos, attack_range=self.selected_unit.attack_range)
 
             if can_attack:
                 self.valid_attack_targets = enemies
@@ -403,8 +409,10 @@ class Grid:
 
     def perform_attack(self, attacker: Unit, target: Unit):
         damage  = attacker.attack + (attacker.level * 2)
-
+        
         target.take_dmg(damage)
+
+        print(f"{self.selected_unit.name} did {damage} damage to {target.name}")
         
         if target.hp <= 0:
             print(f"{target.name} has been defeated")
@@ -443,7 +451,7 @@ class Grid:
 
             if target_unit and target_unit.team != self.selected_unit.team:
 
-                can_attack, enemies = self.can_attack_from_position(self.selected_unit.grid_pos)
+                can_attack, enemies = self.can_attack_from_position(self.selected_unit.grid_pos, self.selected_unit.attack_range)
 
                 
 
@@ -519,27 +527,50 @@ class Grid:
 
         enemies_to_attack = set()
 
-        for dx in range(-attack_range, attack_range):
-            for dy in range(-attack_range, attack_range):
-                
-                # If are you at the position of the unit that is attacking continue.
-                if dx == 0 and dy == 0:
-                    continue
+        if attack_range == 1:
+            for dx in range(-attack_range, attack_range + 1):
+                for dy in range(-attack_range, attack_range + 1):
+                    
+                    # If are you at the position of the unit that is attacking continue.
+                    if dx == 0 and dy == 0:
+                        continue
 
-                target_pos = (unit_pos[0] + dx, unit_pos[1] + dy)
+                    target_pos = (unit_pos[0] + dx, unit_pos[1] + dy)
 
-                target_unit = self.get_unit_at_pos(target_pos)
-        
+                    target_unit = self.get_unit_at_pos(target_pos)
+            
 
-                if target_unit and target_unit.team != self.selected_unit.team:
-                    enemies_to_attack.add(target_unit)
-        
+                    if target_unit and target_unit.team != self.selected_unit.team:
+                        enemies_to_attack.add(target_unit)
+            
+
+            
+            
+        # attack_range of 2+
+        else:
+            
+            for dx in range(-attack_range, attack_range + 1):
+                for dy in range(-attack_range, attack_range + 1):
+
+                    if dx == 0 and dy == 0:
+                        continue
+                        
+                    distance = abs(dx) + abs(dy)
+
+                    if distance == attack_range:
+                        target_pos = (unit_pos[0] + dx, unit_pos[1] + dy)
+
+                        target_unit = self.get_unit_at_pos(target_pos)
+
+                        if target_unit and target_unit.team != self.selected_unit.team:
+                            enemies_to_attack.add(target_unit)
+
 
         if len(enemies_to_attack) != 0:
             return True, enemies_to_attack
+        
         else:
             return False, None
-        
 
 
     def start_new_turn(self):
@@ -674,5 +705,7 @@ class Grid:
 
         self.render_grid_lines(surface, camera_offset=camera_offset)
         self.render_movement_overlay(surface=surface, camera_offset=camera_offset)
+        self.render_attack_overlay(surface=surface, camera_offset=camera_offset)
+
         self.render_units(surface=surface, camera_offset=camera_offset)
         self.render_decision_ui(surface=surface, camera_offset=camera_offset)
