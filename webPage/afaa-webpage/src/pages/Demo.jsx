@@ -19,18 +19,24 @@ function Demo(){
                 </div>
             </div>
             <button className="playDemoButton">PLAY DEMO</button>
-            {user ? <SignOut /> : <SignIn />}
+            {user ? <SignOut /> : <SignInWithG />}
+            {user ? <SignOut /> : <SignInWithUAndP />}
         </div>
     );
 }
 
-function SignIn(){
+function SignInWithG(){
     const signInWithGoogle = () => {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider).catch((error) => {
         console.error("Failed to sign in:", error)});
     }
-    return <button className="signInButton" onClick={signInWithGoogle}>Sign In</button>
+    return <button className="signInButton" onClick={signInWithGoogle}>Sign In With Google</button>
+}
+
+function SignInWithUAndP(){
+    // Placeholder for future un and pw sign-in
+    return <button className="signInButton">Sign In With Username And Password</button>
 }
 
 function SignOut(){
