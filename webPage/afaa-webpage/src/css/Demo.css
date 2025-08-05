@@ -67,7 +67,9 @@
 }
 
 .playDemoButton {
-    display: flex;
+    display: block;
+    margin: .5em auto 0 auto;
+    width: 250px;
     align-items: center;
     justify-content: center;
     width: 250px;
@@ -83,7 +85,7 @@
 }
 
 .signInButton, .signOutButton {
-    display: flex;
+    display: block;
     align-items: center;
     justify-content: center;
     width: 100px;
