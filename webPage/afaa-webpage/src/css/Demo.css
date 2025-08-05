@@ -1,3 +1,4 @@
+/* this isnt being used, i'll leave it commented tho
 .TitleBox3 {
     min-height: 10vh;
     max-height: 15vh;
@@ -12,11 +13,11 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-
+    
     border: rgb(29, 29, 119);
     border-width: 1px;
     border-style: solid;
-}
+}*/
 
 .projectTitle {
     font-size: clamp(2em, 8vw, 3.5em);
@@ -66,13 +67,24 @@
     align-items: center;
 }
 
+.signNplay{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1em; 
+    margin-bottom: 5px;
+    flex-wrap: nowrap;
+}
+
 .playDemoButton {
-    display: block;
-    margin: .5em auto 0 auto;
+    display: flex;
     width: 250px;
     align-items: center;
     justify-content: center;
     width: 250px;
+    height: 70px;
+    padding: 1em 1em;
     background-color: rgb(29, 29, 119);
     color: rgb(214, 214, 214);
     font-size: 1.7em;
@@ -84,25 +96,46 @@
     margin-top: 5px;
 }
 
-.signInButton, .signOutButton {
-    display: block;
+.signInButton, .signInGButton, .signOutButton{
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
+    padding: 1em 1em;
+    width: 300px;
+    height: 60px;
     background-color: rgb(29, 29, 119);
     color: rgb(214, 214, 214);
     font-size: 1em;
     font-family: 'Kode Mono', monospace;
     font-weight: bold;
-    text-decoration: none;
     border-radius: 15px;
     border: 2px solid rgb(0, 0, 0);
     cursor: pointer;
     margin-top: 5px;
 }
 
+.signOutButton{
+    height: 50px;
+    width: 150px;
+    margin-bottom: 5px;
+}
 
-.signInButton:hover, .signOutButton:hover, .playDemoButton:hover{
+.demoSignOut{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.signInButton:hover, .signOutButton:hover, 
+.playDemoButton:hover, .signInGButton:hover{
     background-color: rgb(78, 78, 107);
     color: rgb(149, 149, 215);
+}
+
+@media (max-width: 600px) {
+    .signInButton,.signOutButton,.signInGButton {
+        font-size: 0.7em;
+        padding: 0.4em 0.8em;
+    }
 }
