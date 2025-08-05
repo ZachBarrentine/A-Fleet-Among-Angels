@@ -1,8 +1,8 @@
-
+import pygame
 from typing import Tuple
 
 class Unit:
-    def __init__(self, name: str, grid_pos: Tuple[int, int], movement_range: int = 3, team: str = "player", hp=100, attack=20, attack_range=1):
+    def __init__(self, name: str, grid_pos: Tuple[int, int], movement_range: int = 3, team: str = "player", hp=100, attack=20, attack_range=1, sprite_path=None):
         self.name = name
         self.grid_pos = grid_pos
         self.movement_range = movement_range
@@ -13,6 +13,15 @@ class Unit:
         self.has_moved = False
         self.team = team    # "ally", "enemy"
         self.sprite = None  # pygame surface
+
+        if sprite_path:
+            try:
+                image = pygame.image.load(sprite_path)
+                self.sprite = pygame.transform.scale(image, (60, 60)) # 28 is smaller than the current tile size 32
+
+            except pygame.error as e:
+                print(f"Failed to load sprite {e}")
+
 
         self.hp = hp
         self.max_hp = hp
