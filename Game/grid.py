@@ -412,6 +412,9 @@ class Grid:
         
         target.take_dmg(damage)
 
+        if target.hp <= 0:
+            self.remove_unit(unit=target)
+
         print(f"{self.selected_unit.name} did {damage} damage to {target.name}")
         
         if target.hp <= 0:
@@ -435,8 +438,11 @@ class Grid:
 
         elif self.state == GridState.UNIT_SELECT:
             if grid_pos == self.selected_unit.grid_pos:
+                
+                self.selected_unit.has_moved = True
+                self.state = GridState.DECISION
+                self.setup_decision_menu()
 
-                self.deselect_unit()
                 return True
             
             other_unit = self.get_unit_at_pos(grid_pos=grid_pos)
@@ -528,20 +534,16 @@ class Grid:
         enemies_to_attack = set()
 
         if attack_range == 1:
-            for dx in range(-attack_range, attack_range + 1):
-                for dy in range(-attack_range, attack_range + 1):
-                    
-                    # If are you at the position of the unit that is attacking continue.
-                    if dx == 0 and dy == 0:
-                        continue
 
-                    target_pos = (unit_pos[0] + dx, unit_pos[1] + dy)
+            # Can only attack adjacent sides if attack range is 1.
+            for dx , dy in ([(0, 1), (1, 0), (0, -1), (-1, 0)]):
+                target_pos = (unit_pos[0] + dx, unit_pos[1] + dy)
 
-                    target_unit = self.get_unit_at_pos(target_pos)
-            
+                target_unit = self.get_unit_at_pos(target_pos)
+        
 
-                    if target_unit and target_unit.team != self.selected_unit.team:
-                        enemies_to_attack.add(target_unit)
+                if target_unit and target_unit.team != self.selected_unit.team:
+                    enemies_to_attack.add(target_unit)
             
 
             
@@ -681,24 +683,50 @@ class Grid:
             screen_x = world_pos[0] - camera_offset[0]
             screen_y = world_pos[1] - camera_offset[1]
 
-            # Renders the player units as blue
-            # Red for enemy units
-            color = (0, 0, 255) if unit.team == "player" else (255, 0, 0)
+            # Render the unit's sprite else fall back to using red and blue squares.
+            if unit.sprite:
+                surface.blit(unit.sprite, (screen_x + 2, screen_y + 2))
 
-            # Rendering position of the unit making the unit smaller than the tile with - 4
-            rect = pygame.Rect(screen_x + 2, screen_y + 2, self.tile_size - 4, self.tile_size - 4)
-    
-            pygame.draw.rect(surface, color, rect)
+            else:
+                color = (0, 0, 255) if unit.team == "player" else (255, 0, 0)
 
-            # White border around units
-            pygame.draw.rect(surface, (255, 255, 255), rect, 2)
+                # Rendering position of the unit making the unit smaller than the tile with - 4
+                rect = pygame.Rect(screen_x + 2, screen_y + 2, self.tile_size - 4, self.tile_size - 4)
+        
+                pygame.draw.rect(surface, color, rect)
 
-            font = pygame.font.Font(None, 12)
+                # White border around units
+                pygame.draw.rect(surface, (255, 255, 255), rect, 2)
 
-            # Using [:3] rites the first 3 letters of the unit name
-            text = font.render(unit.name[:3], True, (255, 255, 255))
+                font = pygame.font.Font(None, 12)
 
-            surface.blit(text, (screen_x + 2, screen_y + 2))
+                # Using [:3] rites the first 3 letters of the unit name
+                text = font.render(unit.name[:3], True, (255, 255, 255))
+
+                surface.blit(text, (screen_x + 2, screen_y + 2))
+
+
+            mouse_pos = pygame.mouse.get_pos()
+            hover_grid_pos = self.world_to_grid(mouse_pos, camera_offset=camera_offset)
+
+
+            if hover_grid_pos == unit.grid_pos:
+
+                # Health bar dimensions
+                bar_width = self.tile_size - 4
+                bar_height = 5
+                bar_x = screen_x + 2
+                bar_y = screen_y + 6 # Making the health bar be above the unit
+
+                # Background of the bar is gray for visability
+                pygame.draw.rect(surface, (100, 100, 100), (bar_x, bar_y, bar_width, bar_height))
+
+                # Foreground green/red 
+
+                hp_ratio = max(0, unit.hp / unit.max_hp)
+                hp_color = (0, 255, 0) if hp_ratio > 0.5 else (255, 0, 0)
+
+                pygame.draw.rect(surface, hp_color, (bar_x, bar_y, bar_width * hp_ratio, bar_height))
 
 
     def render(self, surface: pygame.Surface, camera_offset: Tuple[int,int] = (0,0)):

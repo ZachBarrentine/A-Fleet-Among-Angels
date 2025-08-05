@@ -20,7 +20,7 @@ class FireEmblemGame:
             'tile_size': 16
         })()
 
-        self.grid = Grid(self.tilemap, tile_size=32)
+        self.grid = Grid(self.tilemap, tile_size=64)
 
         self.setup_test_units()
 
@@ -30,11 +30,11 @@ class FireEmblemGame:
 
     def setup_test_units(self):
 
-        player1 = Unit("Hero", (5, 5), movement_range=3, team="player", attack_range=1)
-        player2 = Unit("Mage", (6,5), movement_range=2, team="player", attack_range=2)
+        player1 = Unit("Hero", (5, 5), movement_range=3, team="player", attack_range=1, sprite_path="Game/Assets/Unit/test.png")
+        player2 = Unit("Mage", (6,5), movement_range=2, team="player", attack_range=2, sprite_path="Game/Assets/Unit/test2.png")
 
-        enemy1 = Unit("Orc", (10,8), movement_range=2, team="enemy", attack_range=1)
-        enemy2 = Unit("Goblin", (12, 9), movement_range=4, team="enemy", attack_range=1)
+        enemy1 = Unit("Orc", (10,8), movement_range=2, team="enemy", attack_range=1, sprite_path="Game/Assets/Unit/test3.png")
+        enemy2 = Unit("Goblin", (12, 9), movement_range=4, team="enemy", attack_range=1, sprite_path="Game/Assets/Unit/test4.png")
 
         self.grid.add_unit(player1)
         self.grid.add_unit(player2)
