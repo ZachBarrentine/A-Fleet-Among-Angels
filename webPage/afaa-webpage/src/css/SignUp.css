@@ -1,0 +1,77 @@
+.mainUpBox{
+  display: flex;
+  justify-content: center;    
+  align-items: center;        
+  min-height: 100vh; 
+  background-image: url('../../src/assets/Planet2.jpg');
+  background-size: cover;         
+  background-position: center;    
+  background-repeat: no-repeat;   
+  background-attachment: fixed; 
+}
+
+.signUpBox{
+    display:flex;
+    align-items: center;  
+    flex-direction: column;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 2rem;
+    width: 30vw;
+    height: 50vh;
+    text-align: center;
+    background-image: url('../../src/assets/Stock_Space.jpg');
+    background-size: cover;         
+    background-position: center;    
+    background-repeat: no-repeat;   
+    background-attachment: fixed; 
+}
+
+.signUpTitle{
+    font-family: 'Inria Serif', serif;
+    background-image: linear-gradient(#C50D0D, #780000);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.emailUp, .passwordUp{
+    height: 3vh;
+    width: 35vh;
+    font-family: 'Kode Mono', monospace;
+    padding:5px;
+    background-color: rgb(37, 54, 87);
+    color:rgb(255, 255, 255);
+}
+
+.emailUp{
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+}
+
+.submitUp{
+    height: 4vh;
+    margin-bottom: 1vh;
+    font-family: 'Kode Mono', monospace;
+    cursor: pointer;
+    background-color: rgb(37, 54, 87);
+    color:#999797;
+}
+
+.submitUp{
+    margin-bottom: 0;
+    margin-top: 2vh;
+}
+
+
+.signUp, .or{
+    color:#780000;
+    font-family: 'Kode Mono', monospace;
+}
+
+@media (max-width: 600px) {
+    .signInBox{
+        width: 50vw;
+        height: 60vh;
+    }
+}
