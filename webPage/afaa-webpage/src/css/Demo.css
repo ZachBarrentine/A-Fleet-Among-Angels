@@ -67,7 +67,7 @@
     align-items: center;
 }
 
-.signNplay{
+.signNplay, .demoSignOut{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -96,13 +96,14 @@
     margin-top: 5px;
 }
 
-.signInButton, .signInGButton, .signOutButton{
+.signInButton, .signOutButton{
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1em 1em;
-    width: 300px;
-    height: 60px;
+    height: 50px;
+    width: 150px;
+    margin-bottom: 5px;
     background-color: rgb(29, 29, 119);
     color: rgb(214, 214, 214);
     font-size: 1em;
@@ -112,29 +113,17 @@
     border: 2px solid rgb(0, 0, 0);
     cursor: pointer;
     margin-top: 5px;
-}
-
-.signOutButton{
-    height: 50px;
-    width: 150px;
-    margin-bottom: 5px;
-}
-
-.demoSignOut{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    text-decoration: none;
 }
 
 .signInButton:hover, .signOutButton:hover, 
-.playDemoButton:hover, .signInGButton:hover{
+.playDemoButton:hover{
     background-color: rgb(78, 78, 107);
     color: rgb(149, 149, 215);
 }
 
 @media (max-width: 600px) {
-    .signInButton,.signOutButton,.signInGButton {
+    .signInButton,.signOutButton{
         font-size: 0.7em;
         padding: 0.4em 0.8em;
     }
