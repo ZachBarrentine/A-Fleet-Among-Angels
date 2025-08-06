@@ -1,5 +1,5 @@
 import {auth} from '../../firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'; // need to install using npm install react-firebase-hooks
+import { useState } from 'react';
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
@@ -7,18 +7,46 @@ import "../css/SignIn.css"
 
 function SignInPage(){
     
-    const [user] = useAuthState(auth);
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSignIn = async (e) => {
+        
+        e.preventDefault();
+    
+        try{
+            await signInWithEmailAndPassword(auth, email, password)
+            navigate('/Demo');
+        }
+        catch(error){
+            if(error.code === 'auth/user-not-found'){
+                alert("email / user not found.");
+            }
+            else if(error.code === 'auth/wrong-password'){
+                alert("Incorrect password.");
+            }
+            else if(error.code === 'auth/invalid-credential'){
+                alert("Incorrect email or password");
+            }
+            else{
+                alert("Failed to sign in:" + error.message);
+            }
+        };
+      }
     
     return (
         <div className='mainBox'>
         <div className='signInBox'>
             <h1 className ="signInTitle">A Fleet Among Angels</h1>
             
-            <form>
+            <form onSubmit = {handleSignIn}>
 
             <input type="email"
                    className="email"
                    placeholder="Email"
+                   value={email}
+                   onChange={(e) => setEmail(e.target.value)}
                    required/>
             
             <br></br>
@@ -26,13 +54,14 @@ function SignInPage(){
             <input type="password" 
                    className="password"
                    placeholder='Password'
+                   value={password}
+                   onChange={(e) => setPassword(e.target.value)}
                    required/>
-
-            </form>
 
             <button type='submit'
                    className='submit'>Sign In</button>
 
+            </form>
 
             <p className="or">or</p>
 
@@ -55,10 +84,6 @@ function SignInWithG(){
         console.error("Failed to sign in:", error)};
     }
     return <button className="signInGButton" onClick={signInWithGoogle}>Sign In With Google</button>
-}
-
-function SignInWithUAndP(){
-    return <button className="signInButton">Sign In With Username And Password</button>
 }
 
 export default SignInPage;
