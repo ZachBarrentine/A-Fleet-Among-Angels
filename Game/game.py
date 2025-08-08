@@ -92,6 +92,8 @@ class FireEmblemGame:
                         self.grid.state = GridState.IDLE
 
                         if self.grid.history:
+
+                            print(f"The length of grid history is {len(self.grid.history)}")
                             original_pos = self.grid.history.pop()
                             current_pos = self.grid.selected_unit.grid_pos
                             

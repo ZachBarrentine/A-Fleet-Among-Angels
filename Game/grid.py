@@ -226,6 +226,9 @@ class Grid:
         self.state = GridState.UNIT_SELECT
         self.show_grid = True
 
+        self.history.clear() # Clear movement history for unit if not this unit
+                             # will share the same movement history as previously selected and moved units.
+
         self.valid_moves = self.calculate_movement_range(unit=unit)
 
         print(f"Selected {unit.name} - Movement range: {len(self.valid_moves)} tiles")
