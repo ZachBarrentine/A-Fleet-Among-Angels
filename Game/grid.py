@@ -762,3 +762,135 @@ class Grid:
 
         self.render_units(surface=surface, camera_offset=camera_offset)
         self.render_decision_ui(surface=surface, camera_offset=camera_offset)
+
+def enemy_ai(self):
+    """Simple enemy AI that moves towards players and attacks when possible"""
+    
+    # Get all enemy units that haven't moved yet
+    enemy_units = [unit for unit in self.units 
+                   if unit.team == "enemy" and not unit.has_moved]
+    
+    if not enemy_units:
+        # All enemies have moved, switch to player turn
+        self.start_new_turn("player")
+        return
+    
+    # Process each enemy unit
+    for enemy_unit in enemy_units:
+        if enemy_unit.has_moved:
+            continue
+            
+        # Select the enemy unit
+        self.selected_unit = enemy_unit
+        self.state = GridState.UNIT_SELECT
+        
+        # Calculate movement range
+        self.valid_moves = self.calculate_movement_range(enemy_unit)
+        
+        # Find the closest player unit
+        closest_player = self.find_closest_player(enemy_unit)
+        
+        if closest_player:
+            # Try to attack first if already in range
+            can_attack, targets = self.can_attack_from_position(
+                enemy_unit.grid_pos, enemy_unit.attack_range
+            )
+            
+            if can_attack and targets:
+                # Attack the first available target
+                target = next(iter(targets))  # Get first target from set
+                print(f"{enemy_unit.name} attacks {target.name}!")
+                self.perform_attack(enemy_unit, target)
+                enemy_unit.has_moved = True
+            else:
+                # Move towards closest player
+                best_move = self.find_best_move_towards_target(
+                    enemy_unit, closest_player
+                )
+                
+                if best_move and best_move in self.valid_moves:
+                    # Move the enemy
+                    original_pos = enemy_unit.grid_pos
+                    enemy_unit.grid_pos = best_move
+                    
+                    # Update unit positions
+                    del self.unit_positions[original_pos]
+                    self.unit_positions[best_move] = enemy_unit
+                    
+                    print(f"{enemy_unit.name} moves from {original_pos} to {best_move}")
+                    
+                    # Check if can attack after moving
+                    can_attack, targets = self.can_attack_from_position(
+                        best_move, enemy_unit.attack_range
+                    )
+                    
+                    if can_attack and targets:
+                        # Attack after moving
+                        target = next(iter(targets))
+                        print(f"{enemy_unit.name} attacks {target.name} after moving!")
+                        self.perform_attack(enemy_unit, target)
+                
+                enemy_unit.has_moved = True
+        else:
+            # No players found, just mark as moved
+            enemy_unit.has_moved = True
+        
+        # Clear selection
+        self.selected_unit = None
+        self.state = GridState.IDLE
+        self.valid_moves.clear()
+    
+    # Check if all enemies have moved
+    if self.all_units_moved():
+        print("All enemies have moved, switching to player turn")
+        self.start_new_turn("player")
+
+def find_closest_player(self, enemy_unit):
+    """Find the closest player unit to the given enemy unit"""
+    player_units = [unit for unit in self.units if unit.team == "player"]
+    
+    if not player_units:
+        return None
+    
+    closest_player = None
+    min_distance = float('inf')
+    
+    for player_unit in player_units:
+        distance = self.calculate_distance(enemy_unit.grid_pos, player_unit.grid_pos)
+        if distance < min_distance:
+            min_distance = distance
+            closest_player = player_unit
+    
+    return closest_player
+
+def calculate_distance(self, pos1, pos2):
+    """Calculate Manhattan distance between two positions"""
+    return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
+
+def find_best_move_towards_target(self, enemy_unit, target_unit):
+    """Find the best move that gets the enemy closer to the target"""
+    if not self.valid_moves:
+        return None
+    
+    target_pos = target_unit.grid_pos
+    best_move = None
+    min_distance = float('inf')
+    
+    # Check each possible move
+    for move_pos in self.valid_moves:
+        distance = self.calculate_distance(move_pos, target_pos)
+        
+        # Prefer moves that get us closer to the target
+        if distance < min_distance:
+            min_distance = distance
+            best_move = move_pos
+        # If same distance, prefer moves that might allow attacking next turn
+        elif distance == min_distance:
+            # Check if this position would allow attacking next turn
+            potential_attack_distance = distance - enemy_unit.attack_range
+            current_best_attack_distance = self.calculate_distance(best_move, target_pos) - enemy_unit.attack_range
+            
+            if potential_attack_distance < current_best_attack_distance:
+                best_move = move_pos
+    
+    return best_move

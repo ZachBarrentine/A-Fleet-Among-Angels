@@ -176,10 +176,10 @@ class FireEmblemGame:
         while running:
             running = self.handle_input()
 
-            # Where to implement enemy AI.
-
-            # if self.grid.current_phase == "enemy":
-            #      self.grid.enemy_ai()
+            if self.grid.current_phase == "enemy":
+            # Add a small delay so you can see enemy moves
+                pygame.time.wait(500)  # 500ms delay
+                self.grid.enemy_ai()
 
 
             self.render()
