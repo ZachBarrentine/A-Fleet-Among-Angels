@@ -177,7 +177,9 @@ class FireEmblemGame:
             running = self.handle_input()
 
             # Where to implement enemy AI.
+
             # if self.grid.current_phase == "enemy":
+            #      self.grid.enemy_ai()
 
 
             self.render()
