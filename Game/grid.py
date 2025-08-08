@@ -11,6 +11,9 @@ class Grid:
         self.tilemap = tilemap
         self.tile_size = tile_size
 
+        self.current_phase = "player"   # either "player" or "enemy"
+
+
         self.state = GridState.IDLE
         self.selected_unit: Optional[Unit] = None
 
@@ -199,6 +202,8 @@ class Grid:
                     reachable.add(pos)
 
         return reachable
+    
+
         
     
     def select_unit(self, grid_pos: Tuple[int, int]) -> bool:
@@ -207,6 +212,11 @@ class Grid:
 
         if not unit:
             return False
+
+        if unit.team != self.current_phase:
+            print(f"Not your team's turn")
+            return False
+        
         
         if not unit.can_move():
             print(f"{unit.name} has already moved this turn")
@@ -215,6 +225,9 @@ class Grid:
         self.selected_unit = unit
         self.state = GridState.UNIT_SELECT
         self.show_grid = True
+
+        self.history.clear() # Clear movement history for unit if not this unit
+                             # will share the same movement history as previously selected and moved units.
 
         self.valid_moves = self.calculate_movement_range(unit=unit)
 
@@ -575,10 +588,22 @@ class Grid:
             return False, None
 
 
-    def start_new_turn(self):
-        for unit in self.units: 
-            unit.has_moved = False
+    def start_new_turn(self, phase: str):
+
+        if phase:
+            self.current_phase = phase
+
+        for unit in self.units:
+            if unit.team == self.current_phase:
+                unit.has_moved = False
+
         print("New turn has started")
+
+    
+    def all_units_moved(self) -> bool:
+       
+        return all(u.has_moved for u in self.units if u.team == self.current_phase)
+
 
     
     

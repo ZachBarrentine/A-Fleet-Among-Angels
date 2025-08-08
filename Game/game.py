@@ -25,6 +25,7 @@ class FireEmblemGame:
         self.setup_test_units()
 
         self.camera_offset = [0,0]
+        
 
         self.camera_speed = 5
 
@@ -64,7 +65,14 @@ class FireEmblemGame:
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    self.grid.start_new_turn()
+
+                    if self.grid.current_phase == "player":
+                        self.grid.start_new_turn("enemy")
+                        print(f"Switched to enemy phase")
+                    
+                    elif self.grid.current_phase == "enemy":
+                        self.grid.start_new_turn("player")
+                        print(f"Switched to player")
 
 
                 elif event.key == pygame.K_ESCAPE:
@@ -84,6 +92,8 @@ class FireEmblemGame:
                         self.grid.state = GridState.IDLE
 
                         if self.grid.history:
+
+                            print(f"The length of grid history is {len(self.grid.history)}")
                             original_pos = self.grid.history.pop()
                             current_pos = self.grid.selected_unit.grid_pos
                             
@@ -165,6 +175,11 @@ class FireEmblemGame:
         running = True
         while running:
             running = self.handle_input()
+
+            # Where to implement enemy AI.
+            # if self.grid.current_phase == "enemy":
+
+
             self.render()
             self.clock.tick(60)
 

@@ -13,3 +13,4 @@ class GridState(Enum):
     MOVING = "moving"
     TARGETING = "targeting"
     DECISION = "decision"
+
