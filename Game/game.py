@@ -2,7 +2,7 @@ import pygame
 from Game.unit import Unit
 from Game.grid import Grid
 
-from Game.constants import GridState
+from Game.constants import GridState, SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 class FireEmblemGame:
@@ -10,8 +10,8 @@ class FireEmblemGame:
     def __init__(self):
 
         pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
-        pygame.display.set_caption("Fire Emblem like game")
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        pygame.display.set_caption("A Fleet Among Angles")
         
         self.clock = pygame.time.Clock()
 
