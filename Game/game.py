@@ -171,21 +171,22 @@ class FireEmblemGame:
         self.screen.blit(text, (10, 200))
 
     def run(self):
-
         running = True
         while running:
             running = self.handle_input()
 
+            # Enemy AI implementation with timer
             if self.grid.current_phase == "enemy":
-            # Add a small delay so you can see enemy moves
-                pygame.time.wait(500)  # 500ms delay
-                self.grid.enemy_ai()
-
+                current_time = pygame.time.get_ticks()
+                
+                if current_time - self.grid.enemy_turn_timer >= self.grid.enemy_turn_delay:
+                    self.grid.enemy_ai()
+                    self.grid.enemy_turn_timer = current_time
 
             self.render()
             self.clock.tick(60)
 
-        pygame.quit()
+    pygame.quit()
 
         
 
