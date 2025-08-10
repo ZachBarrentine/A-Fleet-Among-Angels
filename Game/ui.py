@@ -18,7 +18,9 @@ class PastelColors:
     HOVER_GLOW = (180, 160, 200)
     ACTIVE_GLOW = (160, 140, 190)
     TEXT_DARK = (80, 60, 100)
-    TEXT_LIGHT = (240, 235, 245)
+    TEXT_LIGHT = (255, 248, 240)  # Warm white for better contrast
+    TEXT_CREAM = (248, 245, 235)  # Soft cream color
+    TEXT_BRIGHT = (255, 255, 255)  # Pure white for maximum contrast
     
     # Special effects
     BORDER_LIGHT = (210, 190, 230)
@@ -249,7 +251,7 @@ class PastelText:
     """Static text with pastel styling options"""
     
     def __init__(self, x: int, y: int, text: str, font_size: int = 24, 
-                 color: tuple = PastelColors.TEXT_DARK, center: bool = False):
+                 color: tuple = PastelColors.TEXT_LIGHT, center: bool = False):
         self.x = x
         self.y = y
         self.text = text
