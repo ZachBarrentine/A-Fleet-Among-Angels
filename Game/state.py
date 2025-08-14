@@ -28,7 +28,8 @@ class State_Manager:
 
     def __init__(self):
         self.states = {
-            "title": State(title)
+            "title": State(title),
+            "battle": State({}),
         }
 
         self.current_state = "title"
@@ -42,18 +43,3 @@ class State_Manager:
         return self.current_state
     
 
-pygame.init()
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("A Fleet Among Angles")
-        
-state_manager = State_Manager()
-running = True
-
-while running:
-    
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-             running = False
-
-    state_manager.states[state_manager.current_state].draw(screen)
-    pygame.display.flip()

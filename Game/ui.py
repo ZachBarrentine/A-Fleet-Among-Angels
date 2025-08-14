@@ -45,6 +45,27 @@ class PastelButton:
         self.corner_radius = 12
         self.border_width = 2
         
+    # def handle_event(self, event: pygame.event.Event) -> bool:
+    #     """Handle mouse events. Returns True if button was clicked."""
+    #     if event.type == pygame.MOUSEBUTTONDOWN:
+    #         if event.button == 1 and self.rect.collidepoint(event.pos):
+    #             self.is_pressed = True
+    #             return False
+        
+    #     elif event.type == pygame.MOUSEBUTTONUP:
+    #         if event.button == 1 and self.is_pressed:
+    #             self.is_pressed = False
+    #             if self.rect.collidepoint(event.pos) and self.callback:
+    #                 self.callback()
+    #                 return True
+        
+    #     elif event.type == pygame.MOUSEMOTION:
+    #         was_hovered = self.is_hovered
+    #         self.is_hovered = self.rect.collidepoint(event.pos)
+            
+    #     return False
+
+
     def handle_event(self, event: pygame.event.Event) -> bool:
         """Handle mouse events. Returns True if button was clicked."""
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -55,8 +76,11 @@ class PastelButton:
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1 and self.is_pressed:
                 self.is_pressed = False
-                if self.rect.collidepoint(event.pos) and self.callback:
-                    self.callback()
+                if self.rect.collidepoint(event.pos):
+                    # Call callback if it exists
+                    if self.callback:
+                        self.callback()
+                    # Always return True if button was clicked, regardless of callback
                     return True
         
         elif event.type == pygame.MOUSEMOTION:
