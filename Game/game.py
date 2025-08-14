@@ -3,7 +3,7 @@ from Game.unit import Unit
 from Game.grid import Grid
 
 from Game.constants import GridState, SCREEN_WIDTH, SCREEN_HEIGHT
-
+from Game.state import State_Manager, State
 
 class FireEmblemGame:
 
@@ -25,7 +25,10 @@ class FireEmblemGame:
         self.setup_test_units()
 
         self.camera_offset = [0,0]
+
+        self.state_manager = State_Manager()
         
+        self.running = True
 
         self.camera_speed = 5
 
@@ -48,97 +51,147 @@ class FireEmblemGame:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False
+
+            if self.state_manager.current_state == "title":
+                if self.handle_title_events(event) == False:
+                    return False
+                continue
             
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
+
+            elif self.state_manager.current_state == "battle":
+
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:
+                        mouse_pos = pygame.mouse.get_pos()
+
+                        grid_pos = self.grid.world_to_grid(mouse_pos, tuple(self.camera_offset))
+
+                        self.grid.handle_click(grid_pos=grid_pos, mouse_pos=mouse_pos)
+
+
+                elif event.type == pygame.MOUSEMOTION:
+
                     mouse_pos = pygame.mouse.get_pos()
-
-                    grid_pos = self.grid.world_to_grid(mouse_pos, tuple(self.camera_offset))
-
-                    self.grid.handle_click(grid_pos=grid_pos, mouse_pos=mouse_pos)
-
-            elif event.type == pygame.MOUSEMOTION:
-
-                mouse_pos = pygame.mouse.get_pos()
-                self.grid.update_hover(mouse_pos=mouse_pos)
-                
-
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-
-                    if self.grid.current_phase == "player":
-                        self.grid.start_new_turn("enemy")
-                        print(f"Switched to enemy phase")
+                    self.grid.update_hover(mouse_pos=mouse_pos)
                     
-                    elif self.grid.current_phase == "enemy":
-                        self.grid.start_new_turn("player")
-                        print(f"Switched to player")
 
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
 
-                elif event.key == pygame.K_ESCAPE:
-
-
-                    if self.grid.state == GridState.TARGETING:
-                        self.grid.state = GridState.DECISION
-                        self.grid.valid_attack_targets = set()
-
-
-                    elif self.grid.state == GridState.DECISION:
-                        self.grid.state = GridState.UNIT_SELECT
-
-                   
-                    elif self.grid.state == GridState.UNIT_SELECT:
-
-                        self.grid.state = GridState.IDLE
-
-                        if self.grid.history:
-
-                            print(f"The length of grid history is {len(self.grid.history)}")
-                            original_pos = self.grid.history.pop()
-                            current_pos = self.grid.selected_unit.grid_pos
-                            
-                            self.grid.selected_unit.grid_pos = original_pos
-
-                            del self.grid.unit_positions[current_pos]
-
-                            self.grid.unit_positions[original_pos] = self.grid.selected_unit
-
-                            print(f"Undid move")
+                        if self.grid.current_phase == "player":
+                            self.grid.start_new_turn("enemy")
+                            print(f"Switched to enemy phase")
                         
-                        self.grid.deselect_unit(undo=True)
+                        elif self.grid.current_phase == "enemy":
+                            self.grid.start_new_turn("player")
+                            print(f"Switched to player")
 
-                    # else:
-                    #     self.grid.deselect_unit()
+
+                    elif event.key == pygame.K_ESCAPE:
+
+
+                        if self.grid.state == GridState.TARGETING:
+                            self.grid.state = GridState.DECISION
+                            self.grid.valid_attack_targets = set()
+
+
+                        elif self.grid.state == GridState.DECISION:
+                            self.grid.state = GridState.UNIT_SELECT
+
+                    
+                        elif self.grid.state == GridState.UNIT_SELECT:
+
+                            self.grid.state = GridState.IDLE
+
+                            if self.grid.history:
+
+                                print(f"The length of grid history is {len(self.grid.history)}")
+                                original_pos = self.grid.history.pop()
+                                current_pos = self.grid.selected_unit.grid_pos
+                                
+                                self.grid.selected_unit.grid_pos = original_pos
+
+                                del self.grid.unit_positions[current_pos]
+
+                                self.grid.unit_positions[original_pos] = self.grid.selected_unit
+
+                                print(f"Undid move")
+                            
+                            self.grid.deselect_unit(undo=True)
+
+                        # else:
+                        #     self.grid.deselect_unit()
                         
 
         
+
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_LEFT]:
-            self.camera_offset[0] -= self.camera_speed
+        if self.state_manager.current_state == "battle":
+            if keys[pygame.K_LEFT]:
+                self.camera_offset[0] -= self.camera_speed
 
-        if keys[pygame.K_RIGHT]:
-            self.camera_offset[0] += self.camera_speed
+            if keys[pygame.K_RIGHT]:
+                self.camera_offset[0] += self.camera_speed
 
-        if keys[pygame.K_UP]:
-            self.camera_offset[1] -= self.camera_speed
-        
-        if keys[pygame.K_DOWN]:
-            self.camera_offset[1] += self.camera_speed
-        
+            if keys[pygame.K_UP]:
+                self.camera_offset[1] -= self.camera_speed
+            
+            if keys[pygame.K_DOWN]:
+                self.camera_offset[1] += self.camera_speed
+            
         return True
+    
+    def handle_title_events(self, event):
+
+        
+
+        title_state = self.state_manager.states["title"]
+
+        if title_state.ui["start"].handle_event(event):
+            print("Start button was clicked on the title screen")
+            self.state_manager.switch_states("battle")
+            return None
+
+
+        elif title_state.ui["load"].handle_event(event):
+            print("Load button on title screen was clicked")
+            return None
+        
+        elif title_state.ui["exit"].handle_event(event):
+            print("Exit button on title screen was clicked")
+
+            # End the game.
+            return False
+
+
+    def update_title(self,dt):
+
+        if self.state_manager.current_state == "title":
+
+            title_state = self.state_manager.states["title"]
+
+            for key, component in title_state.ui.items():
+                if hasattr(component, 'update'):
+                    component.update(dt)
     
 
     def render(self):
 
         self.screen.fill((50, 50, 50))
 
-        # Render tilemap here
-        # self.tilemap.render(self.screen, offset=self.camera_offset)
+        if self.state_manager.current_state == "title":
+            self.state_manager.states[self.state_manager.current_state].draw(self.screen)
+            
+        
+        elif self.state_manager.current_state == "battle":
+            # Render tilemap here
+            # self.tilemap.render(self.screen, offset=self.camera_offset)
 
-        self.grid.render(self.screen, tuple(self.camera_offset))
+            self.grid.render(self.screen, tuple(self.camera_offset))
 
-        self.render_ui()
+            self.render_ui()
 
         # Update screen.
         pygame.display.flip()
@@ -170,24 +223,30 @@ class FireEmblemGame:
         text = font.render(state_text, True, (255, 255, 0))
         self.screen.blit(text, (10, 200))
 
-    def run(self):
-        running = True
-        while running:
-            running = self.handle_input()
+    
 
+
+    def run(self):
+        while self.running:
+            self.running = self.handle_input()
+
+            dt = self.clock.tick(60) / 1000.0 
+
+            self.update_title(dt)
             # Enemy AI implementation with timer
-            if self.grid.current_phase == "enemy":
-                current_time = pygame.time.get_ticks()
-                
-                if current_time - self.grid.enemy_turn_timer >= self.grid.enemy_turn_delay:
-                    self.grid.enemy_ai()
-                    self.grid.enemy_turn_timer = current_time
+
+            if self.state_manager.current_state == "battle":
+                if self.grid.current_phase == "enemy":
+                    current_time = pygame.time.get_ticks()
+                    
+                    if current_time - self.grid.enemy_turn_timer >= self.grid.enemy_turn_delay:
+                        self.grid.enemy_ai()
+                        self.grid.enemy_turn_timer = current_time
 
             self.render()
             self.clock.tick(60)
 
-    pygame.quit()
-
+ 
         
 
 if __name__ == "__main__":
