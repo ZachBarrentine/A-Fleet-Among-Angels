@@ -75,3 +75,16 @@
         height: 60vh;
     }
 }
+
+.passwordStrength{
+    font-family: 'Kode Mono', monospace;
+    font-size: .8em;
+    margin-top: 2vh;
+    text-align: left;
+    line-height: 1.75;
+}
+
+.passwordUp.invalid {
+    border: 1px solid red;
+    box-shadow: 0 0 4px red;
+}
