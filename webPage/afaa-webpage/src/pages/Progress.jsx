@@ -8,11 +8,11 @@ function Progress(){
         </div>
         <div className="pBodyBox">
             <p className="pBodyText"><span className="nameHighlight">A Fleet Among Angels</span> is actively under development. The game is still in the <span className="boldText">early stages</span> of development. 
-            <br/><br/><br/> While there is <span className="boldText">no current progress</span> to show, here is what we are working on:
-		    <br/><br/>- Establishing core gameplay mechanics (Movement, Attacks, Abilities, Etc.)
-            <br/><br/>- Designing and implementing the initial set of units and their skills
-            <br/><br/>- Developing the first playable levels and enemy AI to publish our demo.
-            <br/><br/>- Crafting the art style and user interface.
+            <br/><br/><br/> We are actively working to have the game done by the end of the year. Here is some of our progress:
+		    <br/><br/>- Core gameplay mechanics: Movement and attacks have been implemented as well as the grid.
+            <br/><br/>- Enemy AI has been implemented and the player can play against it.
+            <br/><br/>- Health bars for both player and AI.
+            <br/><br/>- Database implementation is on the works using Firebase.
         </p>
         </div>
     </div>
