@@ -58,6 +58,8 @@ function SignInPage(){
                    onChange={(e) => setPassword(e.target.value)}
                    required/>
 
+            <br></br>
+
             <button type='submit'
                    className='submit'>Sign In</button>
 
