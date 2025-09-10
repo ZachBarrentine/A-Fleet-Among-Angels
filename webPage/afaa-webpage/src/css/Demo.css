@@ -77,17 +77,16 @@
     flex-wrap: nowrap;
 }
 
-.playDemoButton {
+.playDemoButton, .signInButton, .signOutButton {
     display: flex;
-    width: 250px;
     align-items: center;
     justify-content: center;
     width: 250px;
     height: 70px;
-    padding: 1em 1em;
+    text-decoration: none;
     background-color: rgb(29, 29, 119);
     color: rgb(214, 214, 214);
-    font-size: 1.7em;
+    font-size: 1.5em;
     font-family: 'Kode Mono', monospace;
     font-weight: bold;
     border-radius: 15px;
@@ -96,25 +95,7 @@
     margin-top: 5px;
 }
 
-.signInButton, .signOutButton{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1em 1em;
-    height: 50px;
-    width: 150px;
-    margin-bottom: 5px;
-    background-color: rgb(29, 29, 119);
-    color: rgb(214, 214, 214);
-    font-size: 1em;
-    font-family: 'Kode Mono', monospace;
-    font-weight: bold;
-    border-radius: 15px;
-    border: 2px solid rgb(0, 0, 0);
-    cursor: pointer;
-    margin-top: 5px;
-    text-decoration: none;
-}
+
 
 .signInButton:hover, .signOutButton:hover, 
 .playDemoButton:hover{
@@ -124,7 +105,6 @@
 
 @media (max-width: 600px) {
     .signInButton,.signOutButton{
-        font-size: 0.7em;
-        padding: 0.4em 0.8em;
+        font-size: 1em;
     }
 }
