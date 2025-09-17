@@ -17,6 +17,8 @@ function AboutTheProject(){
                 <p className="AboutTheProjectBody indented">
                 <span className="highlightRed">A Fleet Among Angels</span> is a project that wears its inspirations on its sleeves; Franchises such as <span className="makeBold">Legend of the Galactic Heroes</span>, <span className="makeBold">Mobile Suit Gundam</span>, and <span className="makeBold">Fire Emblem</span> all serve as strong references during the creative process for this game. From the setting to the characters to the gameplay mechanics, many aspects of fantastic works were considered during the development of this project.
                 </p>
+
+                
             </div></>
     );
 }

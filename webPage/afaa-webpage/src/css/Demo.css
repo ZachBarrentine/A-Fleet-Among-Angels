@@ -1,24 +1,3 @@
-/* this isnt being used, i'll leave it commented tho
-.TitleBox3 {
-    min-height: 10vh;
-    max-height: 15vh;
-    height: auto;
-    padding: 1em 1em; 
-    display:flex;
-    align-items: center;  
-    justify-content: center;
-    flex-direction: column;
-    margin-bottom: 0px;
-    background-image: url('../assets/Stock_Space.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    
-    border: rgb(29, 29, 119);
-    border-width: 1px;
-    border-style: solid;
-}*/
-
 .projectTitle {
     font-size: clamp(2em, 8vw, 3.5em);
     background-image: linear-gradient(#C50D0D, #780000);
@@ -58,8 +37,8 @@
 }
 
 .demoScreen {
-    width: 85vw;
-    height: 85vh;
+    width: 1280px;
+    height: 720px;
     display: flex;
     background-color: #000;
     margin: 0 auto;
