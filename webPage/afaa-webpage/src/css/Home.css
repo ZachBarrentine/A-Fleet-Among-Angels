@@ -2,7 +2,7 @@
 {     
     /*position: relative;*/         
     height: 10vh;
-    padding: 2.75em 1em;
+    padding: 3.5em 1em;
     display:flex;
     align-items: center;  
     justify-content: center;
@@ -14,7 +14,7 @@
     background-repeat: no-repeat;
     background-position: center 25%;
     /* -------------------------------------------- */
-
+    background-attachment: fixed;
     background-size: cover;
     margin: 0;
     border: rgb(29, 29, 119);
@@ -22,16 +22,8 @@
     border-style: solid;
 }
 
-/*
-.bannerImg{
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    z-index: -1;
-}*/
 
-.homeTitle
-{
+.homeTitle {
     font-size: clamp(2em, 8vw, 3.5em);
     background-image: linear-gradient(#C50D0D, #780000);
     -webkit-background-clip: text;
@@ -41,10 +33,12 @@
     text-align: center;
     font-weight: bold;
     margin-bottom: 10px;
+
+/* Let me know your thoughts on this Font stroke styling */
+    -webkit-text-stroke: .01px #660202;
 }
 
-.homeSubtitle
-{
+.homeSubtitle {
     font-size: clamp(1.1em, 1.3vw, 2em);
     background-image: linear-gradient(#FFD445, #BA9108);
     -webkit-background-clip: text;
@@ -55,7 +49,12 @@
     font-weight: bold;
     margin-top: 0px;
     padding-bottom: 40px;
+
+/* Let me know your thoughts on this Font stroke styling */
+    -webkit-text-stroke: 0.1px #866804;
 }
+
+
 
 .homeContainer{
   padding-bottom: 40px;

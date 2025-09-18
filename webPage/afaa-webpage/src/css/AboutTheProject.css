@@ -2,7 +2,7 @@
     min-height: 10vh;
     max-height: 15vh;
     height: auto;
-    padding: 1em 1em; 
+    padding: 2em 1em; 
     display:flex;
     align-items: center;  
     justify-content: center;
@@ -12,7 +12,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-
+    background-attachment: fixed;
     border: rgb(29, 29, 119);
     border-width: 1px;
     border-style: solid;
@@ -67,11 +67,11 @@
 .makeBold {
     font-weight: bold;
     font-style: italic;
-    color: rgb(177, 212, 212);
+    background: #765988;
 }
 
 .highlightBlue {
-    color: #91cafe;
+    background: #136cbe;
     font-weight: bold;
 }
 
