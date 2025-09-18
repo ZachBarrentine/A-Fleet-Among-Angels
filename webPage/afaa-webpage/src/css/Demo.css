@@ -24,7 +24,7 @@
     color: rgb(214, 214, 214);
     font-family: 'Kode Mono', monospace;
     font-size: clamp(.5em, 6vw, 1em);
-    text-align: left;
+    text-align: center;
     margin-top: 0px;
     margin-bottom: 20px;
     line-height: 30px;

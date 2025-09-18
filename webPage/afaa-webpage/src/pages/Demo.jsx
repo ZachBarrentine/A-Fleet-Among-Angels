@@ -13,7 +13,7 @@ function Demo(){
         <div>
             <h1 className ="projectHeadline">Demo Placeholder</h1>
             <p className="DemoBody">
-            Placeholder line above the demo screen. The screen will lead into the login/user auth and then the main menu.
+                Placeholder text.
             </p>
             <div className="demoScreen">
                 <h1 className="demoTitle">Demo</h1>
