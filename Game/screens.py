@@ -12,3 +12,8 @@ title = {
     "exit": PastelButton(SCREEN_WIDTH//2 - button_width//2, SCREEN_HEIGHT//2 + 200, width=button_width, height=50, text="Exit")
 
 } 
+
+level = {
+    "text": PastelText(SCREEN_WIDTH//2, SCREEN_HEIGHT//2 - 250, text="A Fleet Among Angles", font_size=50, center=True),
+    
+}

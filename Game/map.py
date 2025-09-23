@@ -194,7 +194,7 @@ class TilemapEditor:
                             "pos": [col, row]
                         }
             
-            with open('map.json', 'w') as f:
+            with open('./Game/map.json', 'w') as f:
                 json.dump(tilemap_data, f, indent=2)
             print("Map saved to map.json")
         except Exception as e:
