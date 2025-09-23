@@ -26,11 +26,14 @@ class FireEmblemGame:
 
         self.camera_offset = [0,0]
 
+
         self.state_manager = State_Manager()
         
         self.running = True
 
         self.camera_speed = 5
+
+        
 
     def setup_test_units(self):
 
