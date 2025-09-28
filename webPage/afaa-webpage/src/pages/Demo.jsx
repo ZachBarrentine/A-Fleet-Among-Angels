@@ -16,9 +16,11 @@ function Demo(){
                 Placeholder text.
             </p>
             <div className="demoScreen">
-                <h1 className="demoTitle">Demo</h1>
-                <div className="demoScreen">
-                </div>
+                <iframe 
+                    src="/game/index.html"
+                    title="Game Demo"
+                    allowFullScreen>
+                </iframe>
             </div>
             <div className = "signNplay">
             <button className="playDemoButton">PLAY DEMO</button>

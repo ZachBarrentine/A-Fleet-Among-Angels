@@ -36,14 +36,21 @@
     text-indent: 4em;
 }
 
-.demoScreen {
+.demoScreen{
     width: 1280px;
     height: 720px;
     display: flex;
     background-color: #000;
     margin: 0 auto;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 .signNplay, .demoSignOut{
@@ -74,8 +81,6 @@
     margin-top: 5px;
 }
 
-
-
 .signInButton:hover, .signOutButton:hover, 
 .playDemoButton:hover{
     background-color: rgb(78, 78, 107);
@@ -83,7 +88,13 @@
 }
 
 @media (max-width: 600px) {
-    .signInButton,.signOutButton{
-        font-size: 1em;
+    .signInButton,.signOutButton, .playDemoButton{
+        font-size: .8em;
+        width: 100px;
+        height: 40px;
+    }
+    .demoScreen{
+        width: 500px;
+        height: 350px;
     }
 }
