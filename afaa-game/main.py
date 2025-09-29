@@ -2,7 +2,7 @@ import pygame
 import asyncio
 from Game.unit import Unit
 from Game.grid import Grid
-
+from Game.dialogue import DialogueBox
 from Game.constants import GridState, SCREEN_WIDTH, SCREEN_HEIGHT
 from Game.state import State_Manager, State
 
@@ -257,6 +257,3 @@ class FireEmblemGame:
 if __name__ == "__main__":
     game = FireEmblemGame()
     asyncio.run(game.run())
-
-            
-
