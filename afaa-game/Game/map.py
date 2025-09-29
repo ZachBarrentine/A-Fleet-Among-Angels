@@ -194,12 +194,25 @@ class TilemapEditor:
                             "pos": [col, row]
                         }
             
-            with open('./Game/map.json', 'w') as f:
+            allLevels = [f for f in os.listdir("./afaa-game/Game/levels/") if f.startswith("level") and f.endswith(".json")]
+            number_of_levels = len(allLevels)
+
+
+            levels_dir = "./afaa-game/Game/levels/"
+            filepath = os.path.join(levels_dir, f"level{number_of_levels}.json")
+
+
+            
+            with open(filepath, 'w') as f:
                 json.dump(tilemap_data, f, indent=2)
             print("Map saved to map.json")
+
         except Exception as e:
             print(f"Error saving map: {e}")
     
+
+
+
     def load_map(self):
         """Load a tilemap from a JSON file"""
         try:
