@@ -1,0 +1,132 @@
+{
+  "tilemap": {
+    "16;8": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        16,
+        8
+      ]
+    },
+    "17;8": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        17,
+        8
+      ]
+    },
+    "13;9": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        13,
+        9
+      ]
+    },
+    "15;9": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        15,
+        9
+      ]
+    },
+    "7;10": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        7,
+        10
+      ]
+    },
+    "8;10": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        8,
+        10
+      ]
+    },
+    "9;10": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        9,
+        10
+      ]
+    },
+    "12;10": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        12,
+        10
+      ]
+    },
+    "8;11": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        8,
+        11
+      ]
+    },
+    "9;11": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        9,
+        11
+      ]
+    },
+    "10;12": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        10,
+        12
+      ]
+    },
+    "12;13": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        12,
+        13
+      ]
+    },
+    "13;14": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        13,
+        14
+      ]
+    },
+    "14;15": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        14,
+        15
+      ]
+    },
+    "16;16": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        16,
+        16
+      ]
+    },
+    "17;16": {
+      "type": "stone",
+      "variant": 1,
+      "pos": [
+        17,
+        16
+      ]
+    }
+  }
+}

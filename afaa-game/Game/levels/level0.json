@@ -1,0 +1,100 @@
+{
+  "tilemap": {
+    "6;8": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        6,
+        8
+      ]
+    },
+    "6;9": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        6,
+        9
+      ]
+    },
+    "13;9": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        13,
+        9
+      ]
+    },
+    "6;10": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        6,
+        10
+      ]
+    },
+    "12;10": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        12,
+        10
+      ]
+    },
+    "13;10": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        13,
+        10
+      ]
+    },
+    "7;12": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        7,
+        12
+      ]
+    },
+    "11;12": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        11,
+        12
+      ]
+    },
+    "12;12": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        12,
+        12
+      ]
+    },
+    "8;13": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        8,
+        13
+      ]
+    },
+    "9;13": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        9,
+        13
+      ]
+    },
+    "11;13": {
+      "type": "grass",
+      "variant": 1,
+      "pos": [
+        11,
+        13
+      ]
+    }
+  }
+}
