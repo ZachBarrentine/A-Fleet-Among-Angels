@@ -54,6 +54,10 @@ Being a browser-based game, "A Fleet Among Angels" is being built with the follo
 
 * **Pygame:** A set of Python modules designed for writing video games.
 
+* **Firebase:** For managing player data, game progress, and persistent world states.
+
+* **SQL:** For database management and structured data handling.
+
 ---
 
 ## 🤝 The Team
