@@ -1,5 +1,8 @@
 import pygame
 import asyncio
+import sys
+sys.path.append("./afaa-game")
+
 from Game.unit import Unit
 from Game.grid import Grid
 from Game.dialogue import DialogueBox
@@ -16,10 +19,12 @@ class FireEmblemGame:
         
         self.clock = pygame.time.Clock()
 
-        self.tilemap = type('Tilemap', (), {
-            'tilemap': {},  # Would contain your actual tilemap data
-            'tile_size': 16
-        })()
+        # self.tilemap = type('Tilemap', (), {
+        #     'tilemap': {},  # Would contain your actual tilemap data
+        #     'tile_size': 16
+        # })()
+
+        self.tilemap = self.load_tilemap_from_file("./afaa-game/Game/levels/level7.json")
 
         self.grid = Grid(self.tilemap, tile_size=64)
 
@@ -38,17 +43,20 @@ class FireEmblemGame:
 
     def setup_test_units(self):
 
-        player1 = Unit("Hero", (5, 5), movement_range=3, team="player", attack_range=1, sprite_path="Game/Assets/Unit/test.png")
-        player2 = Unit("Mage", (6,5), movement_range=2, team="player", attack_range=2, sprite_path="Game/Assets/Unit/test2.png")
+        player1 = Unit("Hero", (5, 5), movement_range=3, team="player", attack_range=1, sprite_path="afaa-game/Game/Assets/Unit/test.png")
+        player2 = Unit("Mage", (6,5), movement_range=2, team="player", attack_range=2, sprite_path="afaa-game/Game/Assets/Unit/test2.png")
 
-        enemy1 = Unit("Orc", (10,8), movement_range=2, team="enemy", attack_range=1, sprite_path="Game/Assets/Unit/test3.png")
-        enemy2 = Unit("Goblin", (12, 9), movement_range=4, team="enemy", attack_range=1, sprite_path="Game/Assets/Unit/test4.png")
+        enemy1 = Unit("Orc", (10,8), movement_range=2, team="enemy", attack_range=1, sprite_path="afaa-game/Game/Assets/Unit/test3.png")
+        enemy2 = Unit("Goblin", (12, 9), movement_range=4, team="enemy", attack_range=1, sprite_path="afaa-game/Game/Assets/Unit/test4.png")
 
         self.grid.add_unit(player1)
         self.grid.add_unit(player2)
 
         self.grid.add_unit(enemy1)
         self.grid.add_unit(enemy2)
+
+
+    
 
     def handle_input(self):
 
@@ -250,6 +258,72 @@ class FireEmblemGame:
             self.render()
             self.clock.tick(60)
             await asyncio.sleep(0)
+
+
+    def load_tilemap_from_file(self, filepath):
+        """Load tilemap from JSON file created by the editor"""
+        import json
+        
+        try:
+            with open(filepath, 'r') as f:
+                data = json.load(f)
+                
+            # Create a tilemap object compatible with your Grid class
+            tilemap_obj = type('Tilemap', (), {
+                'tilemap': {},
+                'tile_size': 64  # Your game uses 64px tiles
+            })()
+            
+            # If the file has the new format with tile_properties
+            if isinstance(data, dict) and "tilemap" in data:
+                map_data = data["tilemap"]
+                tile_props = data.get("tile_properties", {})
+            else:
+                map_data = data
+                tile_props = {}
+            
+            # Convert the 2D array to your game's format
+            for row_idx, row in enumerate(map_data):
+                for col_idx, tile_id in enumerate(row):
+                    if tile_id != 0:  # Skip empty tiles
+                        key = f"{col_idx};{row_idx}"
+                        tilemap_obj.tilemap[key] = {
+                            'type': self.get_tile_type_name(tile_id),
+                            'walkable': tile_props.get(str(tile_id), {}).get('walkable', True),
+                            'effect': tile_props.get(str(tile_id), {}).get('effect', None)
+                        }
+            
+            print(f"✓ Loaded tilemap from {filepath}")
+            return tilemap_obj
+            
+        except FileNotFoundError:
+            print(f"✗ Map file not found: {filepath}")
+            return self.create_empty_tilemap()
+        except Exception as e:
+            print(f"✗ Error loading map: {e}")
+            return self.create_empty_tilemap()
+
+    def get_tile_type_name(self, tile_id):
+        """Convert tile ID to type name for your game"""
+        tile_mapping = {
+            1: 'grass',
+            2: 'stone',
+            3: 'water',
+            4: 'stone',
+            5: 'mountain',
+            6: 'stone',
+            7: 'grass',  # Forest
+            8: 'grass',  # Healing
+            9: 'stone'   # Lava
+        }
+        return tile_mapping.get(tile_id, 'grass')
+
+    def create_empty_tilemap(self):
+        """Create an empty tilemap as fallback"""
+        return type('Tilemap', (), {
+            'tilemap': {},
+            'tile_size': 64
+        })()
 
  
         
