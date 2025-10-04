@@ -3,6 +3,7 @@
     justify-content: space-between;
     background-color: rgb(27, 27, 59); 
     height: auto;
+    position: relative;
 }
 
 .navLink:hover{
@@ -51,10 +52,10 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    width: 100px;
-    height: 50px;
+    width: 80px;
+    height: 40px;
 
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }

@@ -25,7 +25,8 @@
 
 .homeTitle {
     font-size: clamp(2em, 8vw, 3.5em);
-    background-image: linear-gradient(#C50D0D, #780000);
+    /* background-image: linear-gradient(#C50D0D, #780000); */
+    background-image: linear-gradient(#a22f2f, #602d01);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -35,23 +36,24 @@
     margin-bottom: 10px;
 
 /* Let me know your thoughts on this Font stroke styling */
-    -webkit-text-stroke: .01px #660202;
+    /* -webkit-text-stroke: .01px #660202; */
+    -webkit-text-stroke: .01px #710000a6;
 }
 
 .homeSubtitle {
     font-size: clamp(1.1em, 1.3vw, 2em);
-    background-image: linear-gradient(#FFD445, #BA9108);
+    background-image: linear-gradient(#6b0996, #39004d);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     font-family: 'Inria Serif', serif;
     text-align: center;
     font-weight: bold;
-    margin-top: 0px;
+    margin-top: 15px;
     padding-bottom: 40px;
 
 /* Let me know your thoughts on this Font stroke styling */
-    -webkit-text-stroke: 0.1px #866804;
+    -webkit-text-stroke: 0.1px #360754;
 }
 
 
