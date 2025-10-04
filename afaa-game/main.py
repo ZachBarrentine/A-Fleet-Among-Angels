@@ -1,6 +1,7 @@
 import pygame
 import asyncio
 import sys
+import os
 sys.path.append("./afaa-game")
 
 from Game.unit import Unit
@@ -8,6 +9,35 @@ from Game.grid import Grid
 from Game.dialogue import DialogueBox
 from Game.constants import GridState, SCREEN_WIDTH, SCREEN_HEIGHT
 from Game.state import State_Manager, State
+
+
+def load_tile_images(tile_size):
+    """Loads tile images from the assets folder."""
+    # This dictionary maps the tile 'type' string to its image file
+    tile_files = {
+        'grass': 'Grass1.png',
+        'stone': 'Brick.png',
+        'water': 'River.png',
+        'mountain': 'Mountains.png'
+    }
+    
+    loaded_images = {}
+    asset_dir = "afaa-game/Game/assets/tiles/"
+    
+    for tile_type, filename in tile_files.items():
+        path = os.path.join(asset_dir, filename)
+        try:
+            img = pygame.image.load(path).convert_alpha()
+            loaded_images[tile_type] = pygame.transform.scale(img, (tile_size, tile_size))
+        except Exception as e:
+            print(f"Error loading image for {tile_type}: {e}")
+            # Create a bright pink fallback surface for missing images
+            fallback_surface = pygame.Surface((tile_size, tile_size))
+            fallback_surface.fill((255, 0, 255))
+            loaded_images[tile_type] = fallback_surface
+
+
+    return loaded_images
 
 class FireEmblemGame:
 
@@ -26,7 +56,12 @@ class FireEmblemGame:
 
         self.tilemap = self.load_tilemap_from_file("./afaa-game/Game/levels/level7.json")
 
+
+
         self.grid = Grid(self.tilemap, tile_size=64)
+
+        self.tile_images = load_tile_images(self.grid.tile_size)
+
 
         self.setup_test_units()
 
@@ -55,9 +90,7 @@ class FireEmblemGame:
         self.grid.add_unit(enemy1)
         self.grid.add_unit(enemy2)
 
-
-    
-
+ 
     def handle_input(self):
 
         for event in pygame.event.get():
@@ -201,6 +234,8 @@ class FireEmblemGame:
             # Render tilemap here
             # self.tilemap.render(self.screen, offset=self.camera_offset)
 
+            self.render_tilemap()
+
             self.grid.render(self.screen, tuple(self.camera_offset))
 
             self.render_ui()
@@ -324,6 +359,33 @@ class FireEmblemGame:
             'tilemap': {},
             'tile_size': 64
         })()
+    
+    # Add this new method to your FireEmblemGame class
+    def render_tilemap(self):
+        """Renders the background terrain tiles based on camera position."""
+        screen_width, screen_height = self.screen.get_size()
+
+        # Calculate the range of grid coordinates visible on screen to avoid drawing the whole map
+        start_col = self.camera_offset[0] // self.grid.tile_size
+        end_col = start_col + (screen_width // self.grid.tile_size) + 2
+        start_row = self.camera_offset[1] // self.grid.tile_size
+        end_row = start_row + (screen_height // self.grid.tile_size) + 2
+
+        # Loop through only the visible tiles
+        for x in range(start_col, end_col):
+            for y in range(start_row, end_row):
+                tile_key = f"{x};{y}"
+                tile_data = self.tilemap.tilemap.get(tile_key)
+
+                if tile_data:
+                    tile_type = tile_data.get('type', 'grass') # Default to 'grass' if type is missing
+                    tile_image = self.tile_images.get(tile_type)
+                    
+                    if tile_image:
+                        # Calculate the tile's position on the screen
+                        screen_x = x * self.grid.tile_size - self.camera_offset[0]
+                        screen_y = y * self.grid.tile_size - self.camera_offset[1]
+                        self.screen.blit(tile_image, (screen_x, screen_y))
 
  
         
