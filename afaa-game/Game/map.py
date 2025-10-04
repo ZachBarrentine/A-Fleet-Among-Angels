@@ -83,7 +83,7 @@ TILES = {
     7: {
         "name": "Forest",
         "color": (34, 139, 34),
-        "file": None,
+        "file": "Forest.png",
         "walkable": True,
         "effect": "defense"  # Reduces damage taken
     },
@@ -97,7 +97,7 @@ TILES = {
     9: {
         "name": "Lava",
         "color": (255, 69, 0),
-        "file": None,
+        "file": "lava.png",
         "walkable": True,
         "effect": "damage"  # Deals damage
     }

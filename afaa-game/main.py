@@ -54,7 +54,7 @@ class FireEmblemGame:
         #     'tile_size': 16
         # })()
 
-        self.tilemap = self.load_tilemap_from_file("./afaa-game/Game/levels/level7.json")
+        self.tilemap = self.load_tilemap_from_file("./afaa-game/Game/levels/level10.json")
 
 
 
