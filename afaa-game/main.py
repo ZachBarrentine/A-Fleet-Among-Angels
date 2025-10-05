@@ -54,11 +54,14 @@ class FireEmblemGame:
         #     'tile_size': 16
         # })()
 
-        self.tilemap = self.load_tilemap_from_file("./afaa-game/Game/levels/level10.json")
+        self.tilemap = self.load_tilemap_from_file("./afaa-game/Game/levels/level13.json")
 
 
 
         self.grid = Grid(self.tilemap, tile_size=64)
+        
+        self.rotated_tile_cache = {}
+
 
         self.tile_images = load_tile_images(self.grid.tile_size)
 
@@ -294,48 +297,51 @@ class FireEmblemGame:
             self.clock.tick(60)
             await asyncio.sleep(0)
 
-
+    # In main.py, modify this function
     def load_tilemap_from_file(self, filepath):
-        """Load tilemap from JSON file created by the editor"""
+        """Load tilemap from JSON file created by the new editor."""
         import json
         
         try:
             with open(filepath, 'r') as f:
                 data = json.load(f)
                 
-            # Create a tilemap object compatible with your Grid class
             tilemap_obj = type('Tilemap', (), {
                 'tilemap': {},
-                'tile_size': 64  # Your game uses 64px tiles
+                'tile_size': 64
             })()
             
-            # If the file has the new format with tile_properties
-            if isinstance(data, dict) and "tilemap" in data:
-                map_data = data["tilemap"]
-                tile_props = data.get("tile_properties", {})
-            else:
-                map_data = data
-                tile_props = {}
+            map_data = data.get("tilemap", [])
+            tile_props = data.get("tile_properties", {})
             
-            # Convert the 2D array to your game's format
+            # --- ADD THIS DEBUG LINE ---
+            print(f"DEBUG: Found map with {len(map_data)} rows. First row content: {map_data[0] if map_data else 'EMPTY'}")
+
             for row_idx, row in enumerate(map_data):
-                for col_idx, tile_id in enumerate(row):
-                    if tile_id != 0:  # Skip empty tiles
+                for col_idx, tile_info in enumerate(row):
+                    tile_id = tile_info.get('id', 0)
+                    tile_rot = tile_info.get('rot', 0)
+
+                    if tile_id != 0:
                         key = f"{col_idx};{row_idx}"
                         tilemap_obj.tilemap[key] = {
                             'type': self.get_tile_type_name(tile_id),
+                            'rot': tile_rot,
                             'walkable': tile_props.get(str(tile_id), {}).get('walkable', True),
                             'effect': tile_props.get(str(tile_id), {}).get('effect', None)
                         }
             
-            print(f"✓ Loaded tilemap from {filepath}")
+            self.rotated_tile_cache.clear()
+
+            # --- ADD THIS SECOND DEBUG LINE ---
+            print(f"DEBUG: Finished loading. Created a map object with {len(tilemap_obj.tilemap)} tiles.")
+            
             return tilemap_obj
             
-        except FileNotFoundError:
-            print(f"✗ Map file not found: {filepath}")
-            return self.create_empty_tilemap()
         except Exception as e:
-            print(f"✗ Error loading map: {e}")
+            # --- THIS WILL SHOW US THE REAL ERROR ---
+            print(f"!!!!!!!! AN ERROR OCCURRED WHILE LOADING THE MAP !!!!!!!!")
+            print(f"ERROR DETAILS: {e}")
             return self.create_empty_tilemap()
 
     def get_tile_type_name(self, tile_id):
@@ -359,35 +365,41 @@ class FireEmblemGame:
             'tilemap': {},
             'tile_size': 64
         })()
-    
-    # Add this new method to your FireEmblemGame class
+
+   # In main.py, replace this entire method
     def render_tilemap(self):
-        """Renders the background terrain tiles based on camera position."""
+        """Renders the background terrain tiles, now with rotation."""
         screen_width, screen_height = self.screen.get_size()
 
-        # Calculate the range of grid coordinates visible on screen to avoid drawing the whole map
-        start_col = self.camera_offset[0] // self.grid.tile_size
+        # Calculate which tiles are visible on screen to improve performance
+        start_col = int(self.camera_offset[0] // self.grid.tile_size)
         end_col = start_col + (screen_width // self.grid.tile_size) + 2
-        start_row = self.camera_offset[1] // self.grid.tile_size
+        start_row = int(self.camera_offset[1] // self.grid.tile_size)
         end_row = start_row + (screen_height // self.grid.tile_size) + 2
 
-        # Loop through only the visible tiles
         for x in range(start_col, end_col):
             for y in range(start_row, end_row):
                 tile_key = f"{x};{y}"
                 tile_data = self.tilemap.tilemap.get(tile_key)
 
                 if tile_data:
-                    tile_type = tile_data.get('type', 'grass') # Default to 'grass' if type is missing
-                    tile_image = self.tile_images.get(tile_type)
-                    
-                    if tile_image:
-                        # Calculate the tile's position on the screen
+                    tile_type = tile_data.get('type', 'grass')
+                    tile_rot = tile_data.get('rot', 0) # Get the rotation value
+                    base_image = self.tile_images.get(tile_type)
+
+                    if base_image:
+                        # Use the cache to avoid rotating images every single frame
+                        cache_key = (tile_type, tile_rot)
+                        if cache_key not in self.rotated_tile_cache:
+                            # If the rotated image isn't in the cache, create and store it
+                            self.rotated_tile_cache[cache_key] = pygame.transform.rotate(base_image, tile_rot)
+                        
+                        # Get the final (correctly rotated) image from the cache
+                        final_image = self.rotated_tile_cache[cache_key]
+                        
                         screen_x = x * self.grid.tile_size - self.camera_offset[0]
                         screen_y = y * self.grid.tile_size - self.camera_offset[1]
-                        self.screen.blit(tile_image, (screen_x, screen_y))
-
- 
+                        self.screen.blit(final_image, (screen_x, screen_y)) 
         
 
 if __name__ == "__main__":
