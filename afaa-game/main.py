@@ -54,13 +54,15 @@ class FireEmblemGame:
         #     'tile_size': 16
         # })()
 
+        self.rotated_tile_cache = {}
+
+
         self.tilemap = self.load_tilemap_from_file("./afaa-game/Game/levels/level13.json")
 
 
 
         self.grid = Grid(self.tilemap, tile_size=64)
         
-        self.rotated_tile_cache = {}
 
 
         self.tile_images = load_tile_images(self.grid.tile_size)
@@ -308,7 +310,7 @@ class FireEmblemGame:
                 
             tilemap_obj = type('Tilemap', (), {
                 'tilemap': {},
-                'tile_size': 64
+                'tile_size': 32
             })()
             
             map_data = data.get("tilemap", [])
