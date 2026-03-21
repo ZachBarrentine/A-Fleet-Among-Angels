@@ -2,11 +2,11 @@
 
 ### A new tactical SRPG forging its path among the stars.
 
-Welcome to the official GitHub repository for **A Fleet Among Angels**, an exciting new browser-based Tactical Strategy Role-Playing Game (SRPG) currently in active development!
+Welcome to the official GitHub repository for **A Fleet Among Angels**, an exciting new browser-based Tactical Strategy Role-Playing Game!
 
 ---
 
-## 🚀 About the Game
+## About the Game
 
 "A Fleet Among Angels" is a tactical SRPG designed to bring deep strategic combat and compelling narratives directly to your web browser. Command your fleet of unique units, each with distinct abilities and roles, across dynamic battlefields. Plan your moves meticulously, exploit environmental advantages, and outmaneuver your foes in a grid-based combat system that rewards strategic thinking and careful execution.
 
@@ -24,7 +24,7 @@ Our vision is to deliver an accessible yet challenging experience that blends th
 
 ---
 
-## 🚧 Development Status: In Progress
+## Development Status: In Progress
 
 "A Fleet Among Angels" is actively under development. We are currently focused on:
 
@@ -40,7 +40,7 @@ We are consistently pushing updates and refining our vision. While not yet ready
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 Being a browser-based game, "A Fleet Among Angels" is being built with the following web technologies:
 
@@ -60,7 +60,7 @@ Being a browser-based game, "A Fleet Among Angels" is being built with the follo
 
 ---
 
-## 🤝 The Team
+## The Team
 
 This project is a collaborative effort by a passionate team of developers and designers. We are a team of 6, including:
 
