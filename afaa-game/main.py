@@ -36,8 +36,65 @@ def load_tile_images(tile_size):
             fallback_surface.fill((255, 0, 255))
             loaded_images[tile_type] = fallback_surface
 
-
     return loaded_images
+
+
+class MusicManager:
+    """Handles background music playback."""
+
+    MUSIC_DIR = "afaa-game/Game/assets/music"
+
+    TRACKS = {
+        "title":    "AFAA_Title_FINAL.wav",
+        "battle_1": "AFAA_Battle_1_FINAL.wav",
+        "battle_2": "AFAA_Battle_2_FINAL.wav",
+        "dream":    "AFAA_Dream_of_a_Golden_Gleam_FINAL.wav",
+        "space":    "AFAA_Space_Talk_FINAL.wav",
+    }
+
+    def __init__(self, volume=0.5):
+        pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=2048)
+        self.current_track = None
+        self.volume = volume
+        pygame.mixer.music.set_volume(self.volume)
+
+    def play(self, track_name: str, loops: int = -1, fade_ms: int = 1500):
+        """Play a track by name. Does nothing if already playing."""
+        if track_name == self.current_track:
+            return
+        path = os.path.join(self.MUSIC_DIR, self.TRACKS.get(track_name, ""))
+        if not os.path.isfile(path):
+            print(f"[MusicManager] File not found: {path}")
+            return
+        try:
+            pygame.mixer.music.load(path)
+            pygame.mixer.music.play(loops=loops, fade_ms=fade_ms)
+            self.current_track = track_name
+            print(f"[MusicManager] Now playing: {track_name}")
+        except Exception as e:
+            print(f"[MusicManager] Could not play '{track_name}': {e}")
+
+    def stop(self, fade_ms: int = 1000):
+        pygame.mixer.music.fadeout(fade_ms)
+        self.current_track = None
+
+    def set_volume(self, volume: float):
+        self.volume = max(0.0, min(1.0, volume))
+        pygame.mixer.music.set_volume(self.volume)
+
+    def volume_up(self, step: float = 0.05):
+        self.set_volume(self.volume + step)
+
+    def volume_down(self, step: float = 0.05):
+        self.set_volume(self.volume - step)
+
+    def toggle_mute(self):
+        if pygame.mixer.music.get_volume() > 0:
+            self._pre_mute_volume = self.volume
+            self.set_volume(0)
+        else:
+            self.set_volume(getattr(self, '_pre_mute_volume', 0.5))
+
 
 class FireEmblemGame:
 
@@ -57,7 +114,7 @@ class FireEmblemGame:
         self.rotated_tile_cache = {}
 
 
-        self.tilemap = self.load_tilemap_from_file("./afaa-game/Game/levels/level13.json")
+        self.tilemap = self.load_tilemap_from_file("./afaa-game/Game/levels/level1.json")
 
 
 
@@ -74,6 +131,10 @@ class FireEmblemGame:
 
 
         self.state_manager = State_Manager()
+
+        # Music — start title theme immediately
+        self.music = MusicManager(volume=0.5)
+        self.music.play("title")
         
         self.running = True
 
@@ -108,7 +169,7 @@ class FireEmblemGame:
                 continue
             
 
-            elif self.state_manager.current_state == "battle":
+            elif self.state_manager.current_state == "battle2":
 
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -172,6 +233,14 @@ class FireEmblemGame:
 
                         # else:
                         #     self.grid.deselect_unit()
+
+                    # Volume controls
+                    elif event.key == pygame.K_EQUALS or event.key == pygame.K_PLUS:
+                        self.music.volume_up()
+                    elif event.key == pygame.K_MINUS:
+                        self.music.volume_down()
+                    elif event.key == pygame.K_m:
+                        self.music.toggle_mute()
                         
 
         
@@ -202,6 +271,7 @@ class FireEmblemGame:
         if title_state.ui["start"].handle_event(event):
             print("Start button was clicked on the title screen")
             self.state_manager.switch_states("battle")
+            self.music.play("battle_1")  # Switch to battle music
             return None
 
 
