@@ -96,7 +96,7 @@ class MusicManager:
             self.set_volume(getattr(self, '_pre_mute_volume', 0.5))
 
 
-class FireEmblemGame:
+class AFAA:
 
     def __init__(self):
 
@@ -133,7 +133,7 @@ class FireEmblemGame:
         self.state_manager = State_Manager()
 
         # Music — start title theme immediately
-        self.music = MusicManager(volume=0.5)
+        self.music = MusicManager(volume=0.7)
         self.music.play("title")
         
         self.running = True
@@ -169,7 +169,7 @@ class FireEmblemGame:
                 continue
             
 
-            elif self.state_manager.current_state == "battle2":
+            elif self.state_manager.current_state == "battle":
 
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -192,10 +192,12 @@ class FireEmblemGame:
 
                         if self.grid.current_phase == "player":
                             self.grid.start_new_turn("enemy")
+                            self.music.play("battle_2")  # Enemy turn music
                             print(f"Switched to enemy phase")
                         
                         elif self.grid.current_phase == "enemy":
                             self.grid.start_new_turn("player")
+                            self.music.play("battle_1")  # Player turn music
                             print(f"Switched to player")
 
 
@@ -475,5 +477,5 @@ class FireEmblemGame:
         
 
 if __name__ == "__main__":
-    game = FireEmblemGame()
+    game = AFAA()
     asyncio.run(game.run())
