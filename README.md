@@ -71,13 +71,15 @@ This project is a collaborative effort by a passionate team of developers and de
 * Jack Tsui
 * Jordan Wilcox
 
-## The Team
+---
 
-Main Menu:
+## Preview
+
+### Main Menu:
 <img width="1597" height="897" alt="main_menu" src="https://github.com/user-attachments/assets/1761d0f6-8165-4441-b7b8-c169a6fb3395" />
 
 
-Gameplay:
+### Gameplay:
 ![gamepaly3](https://github.com/user-attachments/assets/b61f9216-f0c4-4112-b75b-252a7c3a11ad)
 
 
