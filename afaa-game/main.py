@@ -57,7 +57,7 @@ class FireEmblemGame:
         self.rotated_tile_cache = {}
 
 
-        self.tilemap = self.load_tilemap_from_file("./afaa-game/Game/levels/level13.json")
+        self.tilemap = self.load_tilemap_from_file("./afaa-game/Game/levels/level1.json")
 
 
 
