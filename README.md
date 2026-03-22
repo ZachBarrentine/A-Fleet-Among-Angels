@@ -80,8 +80,7 @@ This project is a collaborative effort by a passionate team of developers and de
 
 
 ### Gameplay:
-![gamepaly3](https://github.com/user-attachments/assets/b61f9216-f0c4-4112-b75b-252a7c3a11ad)
-
+![new_gameplay](https://github.com/user-attachments/assets/94ec616d-7569-4250-a0cb-29792538f2d7)
 
 
 
